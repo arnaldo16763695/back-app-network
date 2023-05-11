@@ -1,8 +1,7 @@
 <?php
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\UserController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -17,3 +16,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('/users', [UserController::class, 'index'])->name('user.index');
+Route::post('/users', [UserController::class, 'store'])->name('user.store');
+Route::get('/users/{id}', [UserController::class, 'show'])->name('user.show');
