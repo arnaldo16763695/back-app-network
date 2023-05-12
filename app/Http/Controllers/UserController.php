@@ -98,7 +98,7 @@ class UserController extends Controller
         } else {
             $user->delete();
             $data = [
-                "message"=>"Datos de usuario recuperado exitosamente",
+                "message"=>"Datos de usuario borrado exitosamente",
                 "data"=>$user
             ];
         }
