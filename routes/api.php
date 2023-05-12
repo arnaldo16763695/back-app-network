@@ -1,7 +1,9 @@
 <?php
-use Illuminate\Http\Request;
+
+use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -12,11 +14,23 @@ use App\Http\Controllers\UserController;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
-
+/*
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+*/
 
-Route::get('/users', [UserController::class, 'index'])->name('user.index');
-Route::post('/users', [UserController::class, 'store'])->name('user.store');
-Route::get('/users/{id}', [UserController::class, 'show'])->name('user.show');
+// public routes
+Route::post('/user/login',[AuthController::class,'login'])->name('user.login');
+
+Route::get('/user', [UserController::class, 'index'])->name('user.index');
+Route::get('/user/{id}', [UserController::class, 'show'])->name('user.show');
+Route::post('/user/register',[AuthController::class,'register'])->name('user.register');
+Route::get('/user/logout',[AuthController::class,'logout'])->name('user.logout');
+Route::put('/user/{id}', [UserController::class, 'update'])->name('user.update');
+Route::delete('/user/{id}', [AuthController::class, 'destroy'])->name('user.delete');
+// protected routes
+Route::group(['middleware'=>['auth:sanctum']], function(){
+    // aqui las rutas protegidas
+    Route::get('/user/{id}', [UserController::class, 'show'])->name('user.show');
+});

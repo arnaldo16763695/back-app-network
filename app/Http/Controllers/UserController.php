@@ -2,10 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreUserRequest;
+use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -39,21 +37,9 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreUserRequest $request)
+    public function store()
     {
-        $validated = $request->validated();
-        $user = new User;
-        $user->name = $validated['name'];
-        $user->last_name = $validated['last_name'];
-        $user->email = $validated['email'];
-        $user->password = Hash::make($request->password);
-        $user->role = $validated['role'];
-        $user->save();
-        $data = [
-            "message"=>"Usuario creado exitosamente",
-            "data"=>$user
-        ];
-        return response()->json($data);
+        //
     }
 
     /**
@@ -62,10 +48,14 @@ class UserController extends Controller
     public function show(string $id)
     {
         $user = User::find($id);
-        $data = [
-            "message"=>"Datos de usuario recuperado exitosamente",
-            "data"=>$user
-        ];
+        if ($user===null){
+            $data = [ 'message'=>'No se encontro el usuario solicitado'];
+        } else {
+            $data = [
+                "message"=>"Datos de usuario recuperado exitosamente",
+                "data"=>$user
+            ];
+        }
         return response()->json($data);
     }
 
@@ -74,15 +64,27 @@ class UserController extends Controller
      */
     public function edit(string $id)
     {
-        //
+
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateUserRequest $request, string $id)
     {
-        //
+        $user = User::find($id);
+        $user->name = $request->name;
+        if ($user->email!=$request->email) {
+            $user->email=$request->email;
+        }
+        $user->phone = $request->phone;
+        $user->role = $request->role;
+        $user->save();
+        $data = [
+            "message"=>"Usuario actualizado exitosamente",
+            "data"=>$user
+        ];
+        return response()->json($data);
     }
 
     /**
@@ -90,6 +92,17 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $user = User::find($id);
+        if ($user===null){
+            $data = [ 'message'=>'No se encontro el usuario solicitado'];
+        } else {
+            $user->delete();
+            $data = [
+                "message"=>"Datos de usuario recuperado exitosamente",
+                "data"=>$user
+            ];
+        }
+        return response()->json($data);
+
     }
 }
