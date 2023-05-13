@@ -21,15 +21,17 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 // public routes
-Route::post('/user/login',[AuthController::class,'login'])->name('user.login');
+Route::post('/auth/login',[AuthController::class,'login'])->name('user.login');
+
 Route::get('/user', [UserController::class, 'index'])->name('user.index');
 Route::get('/user/{id}', [UserController::class, 'show'])->name('user.show');
 
 // protected routes
 Route::group(['middleware'=>['auth:sanctum']], function(){
     // aqui las rutas protegidas requieren tener un Token
-    Route::post('/user/register',[AuthController::class,'register'])->name('user.register');
+    Route::get('/auth/logout',[AuthController::class,'logout'])->name('user.logout');
+    Route::post('/auth/register',[AuthController::class,'register'])->name('user.register');
+
     Route::put('/user/{id}', [UserController::class, 'update'])->name('user.update');
     Route::delete('/user/{id}', [UserController::class, 'destroy'])->name('user.delete');
-    Route::get('/user/logout',[AuthController::class,'logout'])->name('user.logout');
 });

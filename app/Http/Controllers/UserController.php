@@ -49,7 +49,7 @@ class UserController extends Controller
     {
         $user = User::find($id);
         if ($user===null){
-            $data = [ 'message'=>'No se encontro el usuario solicitado'];
+            $data = [ 'message'=>'No se encontro Y el usuario solicitado'];
         } else {
             $data = [
                 "message"=>"Datos de usuario recuperado exitosamente",
@@ -94,7 +94,7 @@ class UserController extends Controller
     {
         $user = User::find($id);
         if ($user===null){
-            $data = [ 'message'=>'No se encontro el usuario solicitado'];
+            $data = [ 'message'=>'No se encontro  X el usuario solicitado'];
         } else {
             $user->delete();
             $data = [
