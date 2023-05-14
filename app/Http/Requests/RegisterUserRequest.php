@@ -31,7 +31,6 @@ class RegisterUserRequest extends FormRequest
             'name'=>'required|min:3|max:255',
             'email'=>'required|email|unique:users',
             'phone'=>'min:4',
-            'role'=>'required',
             'password'=>['required', Password::min(8)
                             ->letters()
                             ->numbers()

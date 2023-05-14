@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
@@ -78,7 +79,6 @@ class UserController extends Controller
             $user->email=$request->email;
         }
         $user->phone = $request->phone;
-        $user->role = $request->role;
         $user->save();
         $data = [
             "message"=>"Usuario actualizado exitosamente",
@@ -105,4 +105,5 @@ class UserController extends Controller
         return response()->json($data);
 
     }
+
 }
