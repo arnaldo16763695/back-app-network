@@ -34,10 +34,6 @@ Route::get('/user/{id}', [UserController::class, 'show'])
 // protected routes
 Route::group(['middleware'=>['auth:sanctum']], function(){
 
-    Route::group(['middleware'=>['can:publish articles']], function(){
-
-    });
-
     Route::post('/auth/register',[AuthController::class,'register'])
         ->name('auth.register')
         ->middleware('permission:auth.register');
@@ -55,8 +51,8 @@ Route::group(['middleware'=>['auth:sanctum']], function(){
         ->middleware('permission:auth.logout');
 
     Route::put('/user/{id}', [UserController::class, 'update'])
-        ->name('auth.update')
-        ->middleware('permission:auth.update');
+        ->name('user.update')
+        ->middleware('permission:user.update');
 
     Route::delete('/user/{id}', [UserController::class, 'destroy'])
         ->name('user.delete')
