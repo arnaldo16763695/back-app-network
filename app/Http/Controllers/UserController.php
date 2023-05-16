@@ -9,8 +9,38 @@ use Spatie\Permission\Models\Role;
 class UserController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * ( Muestra todos los usuarios registrados )
+     * @OA\Get (
+     *     path="/api/user",
+     *     tags={"Users"},
+     *   
+     *     @OA\Response(
+     *         response=200,
+     *         description="Datos recuperados exitosamente",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="Datos recuperados exitosamente"),
+     *             @OA\Property(
+     *                 type="array",
+     *                 property="users",
+     *                 @OA\Items(
+     *                     type="object",
+     *                      @OA\Property(property="id",type="number",example="1"),
+     *                      @OA\Property(property="name", type="string", example="Peter Parker"),
+     *                      @OA\Property(property="email",type="string",example="pparker@marvel.net"),
+     *                      @OA\Property(property="phone",type="string",example="0419-999.88.77"),
+     *                      @OA\Property(property="created_at",type="string",example="2023-05-15 02:36:54"),
+     *                      @OA\Property(property="updated_at",type="string",example="2023-05-15 02:36:54"),
+     *                 
+     *                
+     *                 )
+     *               
+     *             )
+     *         )
+     *     )
+     *  
+     * )
      */
+
     public function index()
     {
         $users = User::all();
@@ -27,24 +57,42 @@ class UserController extends Controller
         return response()->json($data);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store()
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
+   /**
+     * ( Muestra un usuario identificado por id )
+     * @OA\Get (
+     *     path="/api/user/{id}",
+     *     tags={"Users"},
+     *     @OA\Parameter(
+     *         in="path",
+     *         name="id",
+     *         required=true,
+     *         @OA\Schema(type="number")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Datos recuperados exitosamente",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="Datos recuperados exitosamente"),
+     *             @OA\Property(
+     *                 type="array",
+     *                 property="users",
+     *                 @OA\Items(
+     *                     type="object",
+     *                      @OA\Property(property="id",type="number",example="1"),
+     *                      @OA\Property(property="name", type="string", example="Peter Parker"),
+     *                      @OA\Property(property="email",type="string",example="pparker@marvel.net"),
+     *                      @OA\Property(property="phone",type="string",example="0419-999.88.77"),
+     *                      @OA\Property(property="created_at",type="string",example="2023-05-15 02:36:54"),
+     *                      @OA\Property(property="updated_at",type="string",example="2023-05-15 02:36:54"),
+     *                 
+     *                
+     *                 )
+     *               
+     *             )
+     *         )
+     *     )
+     *  
+     * )
      */
     public function show(string $id)
     {
@@ -60,16 +108,49 @@ class UserController extends Controller
         return response()->json($data);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-
-    }
-
-    /**
-     * Update the specified resource in storage.
+   
+   /**
+     * ( Actualiza los datos de un usuario identificado por id )
+     * @OA\Put(
+     *     path="/api/user/{id}",
+     *     tags={"Users"},
+     *     security={{"bearerAuth":{}}},
+     *     @OA\Parameter(
+     *         in="path",
+     *         name="id",
+     *         required=true,
+     *         @OA\Schema(type="number")
+     *     ),
+     *     @OA\RequestBody(
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *            @OA\Schema(
+     *                @OA\Property( property="name", type="string"),
+     *                @OA\Property( property="email",type="string"),
+     *                @OA\Property( property="phone",type="string"),
+     *                example={"name": "Peter Parker", "email": "pparker@marvel.net", "phone":"0419-999.88.77" }
+     *            )
+     *        )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Datos actualizados",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="Datos actualizados exitosamente"),
+     *             @OA\Property(
+     *                 property="users",
+     *                 type="object",
+     *                 @OA\Property(property="id",type="number",example="1"),
+     *                 @OA\Property(property="name", type="string", example="Peter Parker"),
+     *                 @OA\Property(property="email",type="string",example="pparker@marvel.net"),
+     *                 @OA\Property(property="phone",type="string",example="0419-999.88.77"),
+     *                 @OA\Property(property="created_at",type="string",example="2023-05-15 02:36:54"),
+     *                 @OA\Property(property="updated_at",type="string",example="2023-05-15 02:36:54"),
+     *             )
+     *         )
+     *     )
+     *  
+     * )
      */
     public function update(UpdateUserRequest $request, string $id)
     {
@@ -88,7 +169,37 @@ class UserController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * ( Elimina los datos de un usuario identificado por id )
+     * @OA\Delete(
+     *     path="/api/user/{id}",
+     *     tags={"Users"},
+     *     security={{"bearerAuth":{}}},
+     *     @OA\Parameter(
+     *         in="path",
+     *         name="id",
+     *         required=true,
+     *         @OA\Schema(type="number")
+     *     ),
+     * 
+     *     @OA\Response(
+     *         response=200,
+     *         description="Registro eliminado",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="Registro eliminado exitosamente"),
+     *             @OA\Property(
+     *                 property="users",
+     *                 type="object",
+     *                 @OA\Property(property="id",type="number",example="1"),
+     *                 @OA\Property(property="name", type="string", example="Peter Parker"),
+     *                 @OA\Property(property="email",type="string",example="pparker@marvel.net"),
+     *                 @OA\Property(property="phone",type="string",example="0419-999.88.77"),
+     *                 @OA\Property(property="created_at",type="string",example="2023-05-15 02:36:54"),
+     *                 @OA\Property(property="updated_at",type="string",example="2023-05-15 02:36:54"),
+     *             )
+     *         )
+     *     )
+     *  
+     * )
      */
     public function destroy(string $id)
     {

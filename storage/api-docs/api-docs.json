@@ -1,0 +1,796 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API Inventario de Redes",
+        "description": "Control de creación, actualización, visualización y eliminación de registros de usuarios",
+        "version": "1.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:8000"
+        }
+    ],
+    "paths": {
+        "/api/auth/register": {
+            "post": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "( Crea un nuevo usuario )",
+                "operationId": "d764dd091cc4494ae0baf360b03319f3",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "phone": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object",
+                                "example": {
+                                    "name": "Peter Parker",
+                                    "email": "pparker@marvel.net",
+                                    "phone": "0419-999.88.77",
+                                    "password": "Test@1234"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Usuario Creado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Rol revocado usuario correctamente"
+                                        },
+                                        "user": {
+                                            "properties": {
+                                                "name": {
+                                                    "type": "string",
+                                                    "example": "Peter Parker"
+                                                },
+                                                "email": {
+                                                    "type": "string",
+                                                    "example": "pparker@marvel.net"
+                                                },
+                                                "phone": {
+                                                    "type": "string",
+                                                    "example": "0419-999.88.77"
+                                                },
+                                                "created_at": {
+                                                    "type": "string",
+                                                    "example": "2023-05-15 02:36:54"
+                                                },
+                                                "updated_at": {
+                                                    "type": "string",
+                                                    "example": "2023-05-15 02:36:54"
+                                                },
+                                                "id": {
+                                                    "type": "number",
+                                                    "example": "1"
+                                                },
+                                                "roles": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "number",
+                                                                "example": "1"
+                                                            },
+                                                            "name": {
+                                                                "type": "string",
+                                                                "example": "Admin"
+                                                            },
+                                                            "guard_name": {
+                                                                "type": "string",
+                                                                "example": "web"
+                                                            },
+                                                            "created_at": {
+                                                                "type": "string",
+                                                                "example": "2023-05-15 02:36:54"
+                                                            },
+                                                            "updated_at": {
+                                                                "type": "string",
+                                                                "example": "2023-05-15 02:36:54"
+                                                            },
+                                                            "pivot": {
+                                                                "properties": {
+                                                                    "model_id": {
+                                                                        "type": "number",
+                                                                        "example": "1"
+                                                                    },
+                                                                    "role_id": {
+                                                                        "type": "number",
+                                                                        "example": "1"
+                                                                    },
+                                                                    "model_type": {
+                                                                        "type": "string",
+                                                                        "example": "App\\Model\\User"
+                                                                    }
+                                                                },
+                                                                "type": "object"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "token": {
+                                            "type": "string",
+                                            "example": "8|xUiWgXHxkYUflJe1s8xjLPiGON78YsPG4NzkzK25"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/auth/login": {
+            "post": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "( Otorga acceso a un usuario autenticado )",
+                "operationId": "8dcb70df1020986038d098cc08d05dae",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object",
+                                "example": {
+                                    "email": "pparker@marvel.net",
+                                    "password": "Test@1234"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Login Usuario",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "user": {
+                                            "properties": {
+                                                "message": {
+                                                    "type": "string",
+                                                    "example": "Usuario Autenticado"
+                                                },
+                                                "token": {
+                                                    "type": "string",
+                                                    "example": "8|xUiWgXHxkYUflJe1s8xjLPiGON78YsPG4NzkzK25"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/auth/logout": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "( Revoca el acceso a un usuario autenticado )",
+                "operationId": "a8dd056be3e98a38c657f73ed6cdef2d",
+                "responses": {
+                    "200": {
+                        "description": "OK, Token revocado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Session cerrada exitosamente"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/auth/roletouser": {
+            "post": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "( Asigna un Rol a un usuario identificado por id )",
+                "operationId": "fe06a4bf56f689d250bcda4830330802",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "role": {
+                                        "type": "string"
+                                    },
+                                    "user_id": {
+                                        "type": "number"
+                                    }
+                                },
+                                "type": "object",
+                                "example": {
+                                    "role": "Admin",
+                                    "user_id": "1"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Asignacion de Rol a Usuario",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Rol asignado a usuario correctamente"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "number",
+                                                    "example": "1"
+                                                },
+                                                "name": {
+                                                    "type": "string",
+                                                    "example": "Peter Parker"
+                                                },
+                                                "email": {
+                                                    "type": "string",
+                                                    "example": "pparker@marvel.net"
+                                                },
+                                                "phone": {
+                                                    "type": "string",
+                                                    "example": "0419-999.88.77"
+                                                },
+                                                "created_at": {
+                                                    "type": "string",
+                                                    "example": "2023-05-15 02:36:54"
+                                                },
+                                                "updated_at": {
+                                                    "type": "string",
+                                                    "example": "2023-05-15 02:36:54"
+                                                },
+                                                "roles": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "number",
+                                                                "example": "1"
+                                                            },
+                                                            "name": {
+                                                                "type": "string",
+                                                                "example": "Admin"
+                                                            },
+                                                            "guard_name": {
+                                                                "type": "string",
+                                                                "example": "web"
+                                                            },
+                                                            "created_at": {
+                                                                "type": "string",
+                                                                "example": "2023-05-15 02:36:54"
+                                                            },
+                                                            "updated_at": {
+                                                                "type": "string",
+                                                                "example": "2023-05-15 02:36:54"
+                                                            },
+                                                            "pivot": {
+                                                                "properties": {
+                                                                    "model_id": {
+                                                                        "type": "number",
+                                                                        "example": "1"
+                                                                    },
+                                                                    "role_id": {
+                                                                        "type": "number",
+                                                                        "example": "1"
+                                                                    },
+                                                                    "model_type": {
+                                                                        "type": "string",
+                                                                        "example": "App\\Model\\User"
+                                                                    }
+                                                                },
+                                                                "type": "object"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/auth/rmvroletouser": {
+            "post": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "( Retira un Rol a un usuario identificado por id )",
+                "operationId": "afe1d69c6ceb77c7f709a4cf6fb984c5",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "role": {
+                                        "type": "string"
+                                    },
+                                    "user_id": {
+                                        "type": "number"
+                                    }
+                                },
+                                "type": "object",
+                                "example": {
+                                    "role": "Admin",
+                                    "user_id": "1"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Revoca un Rol a un Usuario",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Rol revocado usuario correctamente"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "number",
+                                                    "example": "1"
+                                                },
+                                                "name": {
+                                                    "type": "string",
+                                                    "example": "Peter Parker"
+                                                },
+                                                "email": {
+                                                    "type": "string",
+                                                    "example": "pparker@marvel.net"
+                                                },
+                                                "phone": {
+                                                    "type": "string",
+                                                    "example": "0419-999.88.77"
+                                                },
+                                                "created_at": {
+                                                    "type": "string",
+                                                    "example": "2023-05-15 02:36:54"
+                                                },
+                                                "updated_at": {
+                                                    "type": "string",
+                                                    "example": "2023-05-15 02:36:54"
+                                                },
+                                                "roles": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "number",
+                                                                "example": "1"
+                                                            },
+                                                            "name": {
+                                                                "type": "string",
+                                                                "example": "Admin"
+                                                            },
+                                                            "guard_name": {
+                                                                "type": "string",
+                                                                "example": "web"
+                                                            },
+                                                            "created_at": {
+                                                                "type": "string",
+                                                                "example": "2023-05-15 02:36:54"
+                                                            },
+                                                            "updated_at": {
+                                                                "type": "string",
+                                                                "example": "2023-05-15 02:36:54"
+                                                            },
+                                                            "pivot": {
+                                                                "properties": {
+                                                                    "model_id": {
+                                                                        "type": "number",
+                                                                        "example": "1"
+                                                                    },
+                                                                    "role_id": {
+                                                                        "type": "number",
+                                                                        "example": "1"
+                                                                    },
+                                                                    "model_type": {
+                                                                        "type": "string",
+                                                                        "example": "App\\Model\\User"
+                                                                    }
+                                                                },
+                                                                "type": "object"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/user": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "( Muestra todos los usuarios registrados )",
+                "operationId": "971db9bc974c0e607288cfe7ecc10096",
+                "responses": {
+                    "200": {
+                        "description": "Datos recuperados exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Datos recuperados exitosamente"
+                                        },
+                                        "users": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "number",
+                                                        "example": "1"
+                                                    },
+                                                    "name": {
+                                                        "type": "string",
+                                                        "example": "Peter Parker"
+                                                    },
+                                                    "email": {
+                                                        "type": "string",
+                                                        "example": "pparker@marvel.net"
+                                                    },
+                                                    "phone": {
+                                                        "type": "string",
+                                                        "example": "0419-999.88.77"
+                                                    },
+                                                    "created_at": {
+                                                        "type": "string",
+                                                        "example": "2023-05-15 02:36:54"
+                                                    },
+                                                    "updated_at": {
+                                                        "type": "string",
+                                                        "example": "2023-05-15 02:36:54"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/user/{id}": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "( Muestra un usuario identificado por id )",
+                "operationId": "d8f696420bea235f4916124c9ba1c507",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Datos recuperados exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Datos recuperados exitosamente"
+                                        },
+                                        "users": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "number",
+                                                        "example": "1"
+                                                    },
+                                                    "name": {
+                                                        "type": "string",
+                                                        "example": "Peter Parker"
+                                                    },
+                                                    "email": {
+                                                        "type": "string",
+                                                        "example": "pparker@marvel.net"
+                                                    },
+                                                    "phone": {
+                                                        "type": "string",
+                                                        "example": "0419-999.88.77"
+                                                    },
+                                                    "created_at": {
+                                                        "type": "string",
+                                                        "example": "2023-05-15 02:36:54"
+                                                    },
+                                                    "updated_at": {
+                                                        "type": "string",
+                                                        "example": "2023-05-15 02:36:54"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "( Actualiza los datos de un usuario identificado por id )",
+                "operationId": "5e09c26a0abb2b1bf040badb2d9c69ba",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "phone": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object",
+                                "example": {
+                                    "name": "Peter Parker",
+                                    "email": "pparker@marvel.net",
+                                    "phone": "0419-999.88.77"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Datos actualizados",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Datos actualizados exitosamente"
+                                        },
+                                        "users": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "number",
+                                                    "example": "1"
+                                                },
+                                                "name": {
+                                                    "type": "string",
+                                                    "example": "Peter Parker"
+                                                },
+                                                "email": {
+                                                    "type": "string",
+                                                    "example": "pparker@marvel.net"
+                                                },
+                                                "phone": {
+                                                    "type": "string",
+                                                    "example": "0419-999.88.77"
+                                                },
+                                                "created_at": {
+                                                    "type": "string",
+                                                    "example": "2023-05-15 02:36:54"
+                                                },
+                                                "updated_at": {
+                                                    "type": "string",
+                                                    "example": "2023-05-15 02:36:54"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "( Elimina los datos de un usuario identificado por id )",
+                "operationId": "f8d7aea516ee464d0afee90f3a1a1722",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Registro eliminado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Registro eliminado exitosamente"
+                                        },
+                                        "users": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "number",
+                                                    "example": "1"
+                                                },
+                                                "name": {
+                                                    "type": "string",
+                                                    "example": "Peter Parker"
+                                                },
+                                                "email": {
+                                                    "type": "string",
+                                                    "example": "pparker@marvel.net"
+                                                },
+                                                "phone": {
+                                                    "type": "string",
+                                                    "example": "0419-999.88.77"
+                                                },
+                                                "created_at": {
+                                                    "type": "string",
+                                                    "example": "2023-05-15 02:36:54"
+                                                },
+                                                "updated_at": {
+                                                    "type": "string",
+                                                    "example": "2023-05-15 02:36:54"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "scheme": "bearer"
+            }
+        }
+    }
+}
