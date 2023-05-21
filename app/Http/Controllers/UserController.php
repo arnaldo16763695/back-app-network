@@ -13,7 +13,7 @@ class UserController extends Controller
      * @OA\Get (
      *     path="/api/user",
      *     tags={"Users"},
-     *   
+     *
      *     @OA\Response(
      *         response=200,
      *         description="Datos recuperados exitosamente",
@@ -30,14 +30,14 @@ class UserController extends Controller
      *                      @OA\Property(property="phone",type="string",example="0419-999.88.77"),
      *                      @OA\Property(property="created_at",type="string",example="2023-05-15 02:36:54"),
      *                      @OA\Property(property="updated_at",type="string",example="2023-05-15 02:36:54"),
-     *                 
-     *                
+     *
+     *
      *                 )
-     *               
+     *
      *             )
      *         )
      *     )
-     *  
+     *
      * )
      */
 
@@ -84,14 +84,14 @@ class UserController extends Controller
      *                      @OA\Property(property="phone",type="string",example="0419-999.88.77"),
      *                      @OA\Property(property="created_at",type="string",example="2023-05-15 02:36:54"),
      *                      @OA\Property(property="updated_at",type="string",example="2023-05-15 02:36:54"),
-     *                 
-     *                
+     *
+     *
      *                 )
-     *               
+     *
      *             )
      *         )
      *     )
-     *  
+     *
      * )
      */
     public function show(string $id)
@@ -108,7 +108,7 @@ class UserController extends Controller
         return response()->json($data);
     }
 
-   
+
    /**
      * ( Actualiza los datos de un usuario identificado por id )
      * @OA\Put(
@@ -128,7 +128,8 @@ class UserController extends Controller
      *                @OA\Property( property="name", type="string"),
      *                @OA\Property( property="email",type="string"),
      *                @OA\Property( property="phone",type="string"),
-     *                example={"name": "Peter Parker", "email": "pparker@marvel.net", "phone":"0419-999.88.77" }
+     *                @OA\Property( property="role_id",type="integer"),
+     *                example={"name": "Peter Parker", "email": "pparker@marvel.net", "phone":"0419-999.88.77" , "role_id":1}
      *            )
      *        )
      *     ),
@@ -136,9 +137,9 @@ class UserController extends Controller
      *         response=200,
      *         description="Datos actualizados",
      *         @OA\JsonContent(
-     *             @OA\Property(property="message", type="string", example="Datos actualizados exitosamente"),
+     *             @OA\Property(property="message", type="string", example="información de usuario actualizada exitosamente"),
      *             @OA\Property(
-     *                 property="users",
+     *                 property="data",
      *                 type="object",
      *                 @OA\Property(property="id",type="number",example="1"),
      *                 @OA\Property(property="name", type="string", example="Peter Parker"),
@@ -146,25 +147,69 @@ class UserController extends Controller
      *                 @OA\Property(property="phone",type="string",example="0419-999.88.77"),
      *                 @OA\Property(property="created_at",type="string",example="2023-05-15 02:36:54"),
      *                 @OA\Property(property="updated_at",type="string",example="2023-05-15 02:36:54"),
+     *                 @OA\Property(
+     *                     type="array",
+     *                     property="roles",
+     *                     @OA\Items(
+     *                         type="object",
+     *                         @OA\Property(property="id",type="number",example="1"),
+     *                         @OA\Property(property="name",type="string",example="Admin"),
+     *                         @OA\Property(property="guard_name",type="string",example="web"),
+     *                         @OA\Property(property="created_at",type="string",example="2023-05-15 02:36:54"),
+     *                         @OA\Property(property="updated_at",type="string",example="2023-05-15 02:36:54"),
+     *                         @OA\Property(
+     *                             property="pivot",
+     *                             type="object",
+     *                             @OA\Property(property="model_id",type="number",example="1"),
+     *                             @OA\Property(property="role_id",type="number",example="1"),
+     *                             @OA\Property(property="model_type",type="string",example="App\Model\User")
+     *                         )
+     *                     )
+     *                 )
      *             )
      *         )
      *     )
-     *  
+     *
      * )
      */
     public function update(UpdateUserRequest $request, string $id)
     {
+
         $user = User::find($id);
+        if (!$user){
+            $response = [
+                "message"=>"Usuario no existe",
+                "status" => 400
+            ];
+            return response()->json($response, 400);
+        }
+
+        $role = Role::find($request->role_id);
+        if (!$role){
+            $response = [
+                "message"=>"Rol a actualizar no existe",
+                "status" => 400
+            ];
+            return response()->json($response, 400);
+        }
         $user->name = $request->name;
         if ($user->email!=$request->email) {
             $user->email=$request->email;
         }
         $user->phone = $request->phone;
         $user->save();
+
+        $actualRole = $user->getRoleNames('name')->first();
+        if ($actualRole !== $role->name){
+            $user->removeRole($actualRole);
+            $user->assignRole($role->name);
+        }
+
         $data = [
-            "message"=>"Usuario actualizado exitosamente",
+            "message"=>"información de usuario actualizada exitosamente",
             "data"=>$user
         ];
+
         return response()->json($data);
     }
 
@@ -180,7 +225,7 @@ class UserController extends Controller
      *         required=true,
      *         @OA\Schema(type="number")
      *     ),
-     * 
+     *
      *     @OA\Response(
      *         response=200,
      *         description="Registro eliminado",
@@ -198,7 +243,7 @@ class UserController extends Controller
      *             )
      *         )
      *     )
-     *  
+     *
      * )
      */
     public function destroy(string $id)
