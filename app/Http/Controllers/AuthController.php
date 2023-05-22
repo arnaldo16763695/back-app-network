@@ -7,7 +7,6 @@ use App\Http\Requests\RegisterUserRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
 
@@ -32,7 +31,7 @@ class AuthController extends Controller
      * @OA\Post (
      *     path="/api/auth/register",
      *     tags={"Users"},
-     *     security={{"bearerAuth":{}}}, 
+     *     security={{"bearerAuth":{}}},
      *     @OA\RequestBody(
      *         @OA\MediaType(
      *             mediaType="application/json",
@@ -40,8 +39,9 @@ class AuthController extends Controller
      *                @OA\Property( property="name", type="string"),
      *                @OA\Property( property="email",type="string"),
      *                @OA\Property( property="phone",type="string"),
+     *                @OA\Property( property="role_id",type="integer"),
      *                @OA\Property( property="password", type="string"),
-     *                example={"name": "Peter Parker", "email": "pparker@marvel.net", "phone":"0419-999.88.77", "password":"Test@1234" }
+     *                example={"name": "Peter Parker", "email": "pparker@marvel.net", "phone":"0419-999.88.77", "role_id":1, "password":"Test@1234" }
      *            )
      *        )
      *     ),
@@ -50,7 +50,8 @@ class AuthController extends Controller
      *         response=201,
      *         description="Usuario Creado",
      *         @OA\JsonContent(
-     *             @OA\Property(property="message", type="string", example="Rol revocado usuario correctamente"),
+     *             @OA\Property(property="message", type="string", example="Registro creado"),
+     *             @OA\Property(property="status", type="integer", example=201),
      *             @OA\Property(
      *                 property="user",
      *                 type="object",
@@ -87,23 +88,32 @@ class AuthController extends Controller
      */
     public function register(RegisterUserRequest $request){
 
+        $role = Role::find($request->role_id);
+        if (!$role){
+            $response=[
+                'message'=>'El rol indicado no se encuentra en la base de datos',
+                'status'=>400,
+            ];
+
+            return response()->json($response,400);
+        }
         $user=User::create([
             'name'=>$request->name,
             'email'=>$request->email,
             'phone'=>$request->phone,
-            'role'=>$request->role,
             'password'=>Hash::make($request->password)
-        ])->assignRole('Usuario');
+        ])->assignRole($role);
 
-        $token=$user->createToken('appnettoken')->plainTextToken;
+        // $token=$user->createToken('appnettoken')->plainTextToken;
 
         $response=[
             'message'=>'Registro creado',
-            'user'=>$user,
-            'token'=>$token
+            'status'=>201,
+            'user'=>$user
+            // 'token'=>$token
         ];
 
-        return response($response,201);
+        return response()->json($response,201);
     }
 
 /**
@@ -122,7 +132,7 @@ class AuthController extends Controller
      *            )
      *        )
      *     ),
-     * 
+     *
      *     @OA\Response(
      *         response=200,
      *         description="Login Usuario",
@@ -168,7 +178,7 @@ class AuthController extends Controller
      *     )
      * )
      */
-    
+
      public function logout() {
         Auth()->user()->tokens()->delete();
         $data = [
@@ -195,7 +205,7 @@ class AuthController extends Controller
      *            )
      *        )
      *     ),
-     * 
+     *
      *     @OA\Response(
      *         response=201,
      *         description="Asignacion de Rol a Usuario",
@@ -210,7 +220,7 @@ class AuthController extends Controller
      *                 @OA\Property(property="phone",type="string",example="0419-999.88.77"),
      *                 @OA\Property(property="created_at",type="string",example="2023-05-15 02:36:54"),
      *                 @OA\Property(property="updated_at",type="string",example="2023-05-15 02:36:54"),
-     *                
+     *
      *                 @OA\Property(
      *                     type="array",
      *                     property="roles",
@@ -277,7 +287,7 @@ class AuthController extends Controller
      *            )
      *        )
      *     ),
-     * 
+     *
      *     @OA\Response(
      *         response=201,
      *         description="Revoca un Rol a un Usuario",
@@ -292,7 +302,7 @@ class AuthController extends Controller
      *                 @OA\Property(property="phone",type="string",example="0419-999.88.77"),
      *                 @OA\Property(property="created_at",type="string",example="2023-05-15 02:36:54"),
      *                 @OA\Property(property="updated_at",type="string",example="2023-05-15 02:36:54"),
-     *                
+     *
      *                 @OA\Property(
      *                     type="array",
      *                     property="roles",

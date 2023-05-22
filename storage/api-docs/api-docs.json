@@ -32,6 +32,9 @@
                                     "phone": {
                                         "type": "string"
                                     },
+                                    "role_id": {
+                                        "type": "integer"
+                                    },
                                     "password": {
                                         "type": "string"
                                     }
@@ -41,6 +44,7 @@
                                     "name": "Peter Parker",
                                     "email": "pparker@marvel.net",
                                     "phone": "0419-999.88.77",
+                                    "role_id": 1,
                                     "password": "Test@1234"
                                 }
                             }
@@ -56,7 +60,11 @@
                                     "properties": {
                                         "message": {
                                             "type": "string",
-                                            "example": "Rol revocado usuario correctamente"
+                                            "example": "Registro creado"
+                                        },
+                                        "status": {
+                                            "type": "integer",
+                                            "example": 201
                                         },
                                         "user": {
                                             "properties": {
@@ -649,13 +657,17 @@
                                     },
                                     "phone": {
                                         "type": "string"
+                                    },
+                                    "role_id": {
+                                        "type": "integer"
                                     }
                                 },
                                 "type": "object",
                                 "example": {
                                     "name": "Peter Parker",
                                     "email": "pparker@marvel.net",
-                                    "phone": "0419-999.88.77"
+                                    "phone": "0419-999.88.77",
+                                    "role_id": 1
                                 }
                             }
                         }
@@ -670,9 +682,9 @@
                                     "properties": {
                                         "message": {
                                             "type": "string",
-                                            "example": "Datos actualizados exitosamente"
+                                            "example": "información de usuario actualizada exitosamente"
                                         },
-                                        "users": {
+                                        "data": {
                                             "properties": {
                                                 "id": {
                                                     "type": "number",
@@ -697,6 +709,51 @@
                                                 "updated_at": {
                                                     "type": "string",
                                                     "example": "2023-05-15 02:36:54"
+                                                },
+                                                "roles": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "number",
+                                                                "example": "1"
+                                                            },
+                                                            "name": {
+                                                                "type": "string",
+                                                                "example": "Admin"
+                                                            },
+                                                            "guard_name": {
+                                                                "type": "string",
+                                                                "example": "web"
+                                                            },
+                                                            "created_at": {
+                                                                "type": "string",
+                                                                "example": "2023-05-15 02:36:54"
+                                                            },
+                                                            "updated_at": {
+                                                                "type": "string",
+                                                                "example": "2023-05-15 02:36:54"
+                                                            },
+                                                            "pivot": {
+                                                                "properties": {
+                                                                    "model_id": {
+                                                                        "type": "number",
+                                                                        "example": "1"
+                                                                    },
+                                                                    "role_id": {
+                                                                        "type": "number",
+                                                                        "example": "1"
+                                                                    },
+                                                                    "model_type": {
+                                                                        "type": "string",
+                                                                        "example": "App\\Model\\User"
+                                                                    }
+                                                                },
+                                                                "type": "object"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
                                                 }
                                             },
                                             "type": "object"
