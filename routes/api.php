@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\RoleController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use Illuminate\Auth\Middleware\Authorize;
@@ -30,6 +31,9 @@ Route::get('/user', [UserController::class, 'index'])
 
 Route::get('/user/{id}', [UserController::class, 'show'])
     ->name('user.show');
+
+Route::get('/roles', [RoleController::class, 'index'])
+    ->name('roles.index');
 
 // protected routes
 Route::group(['middleware'=>['auth:sanctum']], function(){
