@@ -69,4 +69,30 @@ class HeadquarterController extends Controller
 
         return response()->json($response,201);
     }
+
+    public function Update(RegisterHeadquarterRequest $request, $id)
+    {
+        $headquarter = Headquarter::find($id);
+        if (!$headquarter){
+            $response= [
+                "message"=>"El registro no existe", 
+                "status"=> 400
+            ];
+
+            
+        }else{
+            $headquarter->name= $request->name;
+            $headquarter->state= $request->state;
+            $headquarter->city= $request->city;
+            $headquarter->address= $request->address;
+            $headquarter->save();
+            
+            $response = [
+                "message"=>"Registro actualizado exitosamente",
+                "status"=> 201,
+                "data"=> $headquarter    
+            ];
+        }
+        return response()->json($response); 
+    }
 }

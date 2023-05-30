@@ -50,6 +50,10 @@ Route::get('/headquarters/{id}', [HeadquarterController::class, 'show'])
 Route::post('/headquarters/register', [HeadquarterController::class, 'register'])
     ->name('headquarters.register');
 
+Route::put('/headquarters/{id}', [HeadquarterController::class, 'update'])
+    ->name('headquarters.update');
+
+
 //rutas de locations 
 Route::get('/locations', [LocationController::class, 'index'])
     ->name('locations.index');  
@@ -60,6 +64,9 @@ Route::get('/locations/{id}', [LocationController::class, 'show'])
 Route::post('/locations/register', [LocationController::class, 'register'])
     ->name('locations.register');
 
+Route::put('/locations/{id}', [LocationController::class, 'update'])
+    ->name('locations.update');
+
 //ruta de devices
 Route::get('/devices', [DeviceController::class, 'index'])
     ->name('devices.index');
@@ -69,6 +76,8 @@ Route::get('/devices/{id}', [DeviceController::class, 'show'])
 
 Route::post('/devices/register', [DeviceController::class, 'register'])
     ->name('devices.register');
+
+
 // protected routes
 Route::group(['middleware'=>['auth:sanctum']], function(){
 
