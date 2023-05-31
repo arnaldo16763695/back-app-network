@@ -1,9 +1,14 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DeviceController;
+use App\Http\Controllers\HeadquarterController;
+use App\Http\Controllers\LocationController;
 use App\Http\Controllers\RoleController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Models\Headquarter;
+use App\Models\Location;
 use Illuminate\Auth\Middleware\Authorize;
 use GuzzleHttp\Psr7\Request;
 
@@ -35,6 +40,54 @@ Route::get('/user/{id}', [UserController::class, 'show'])
 Route::get('/roles', [RoleController::class, 'index'])
     ->name('roles.index');
 
+//ruta de headquarters (sedes)
+Route::get('/headquarters', [HeadquarterController::class, 'index'])
+    ->name('headquarters.index');
+
+Route::get('/headquarters/{id}', [HeadquarterController::class, 'show'])
+    ->name('headquarters.show');
+
+Route::post('/headquarters/register', [HeadquarterController::class, 'register'])
+    ->name('headquarters.register');
+
+Route::put('/headquarters/{id}', [HeadquarterController::class, 'update'])
+    ->name('headquarters.update');
+
+Route::delete('/headquarters/{id}', [HeadquarterController::class, 'destroy'])
+    ->name('headquarters.delete');
+
+//rutas de locations 
+Route::get('/locations', [LocationController::class, 'index'])
+    ->name('locations.index');  
+    
+Route::get('/locations/{id}', [LocationController::class, 'show'])
+    ->name('locations.show'); 
+
+Route::post('/locations/register', [LocationController::class, 'register'])
+    ->name('locations.register');
+
+Route::put('/locations/{id}', [LocationController::class, 'update'])
+    ->name('locations.update');
+
+Route::delete('/locations/{id}', [LocationController::class, 'destroy'])
+    ->name('locations.delete');
+
+//ruta de devices
+Route::get('/devices', [DeviceController::class, 'index'])
+    ->name('devices.index');
+
+Route::get('/devices/{id}', [DeviceController::class, 'show'])
+    ->name('devices.show');
+
+Route::post('/devices/register', [DeviceController::class, 'register'])
+    ->name('devices.register');
+
+Route::put('/devices/{id}', [DeviceController::class, 'update'])
+    ->name('devices.update');
+
+Route::delete('/devices/{id}', [DeviceController::class, 'destroy'])
+    ->name('devices.delete');
+
 // protected routes
 Route::group(['middleware'=>['auth:sanctum']], function(){
 
@@ -61,5 +114,7 @@ Route::group(['middleware'=>['auth:sanctum']], function(){
     Route::delete('/user/{id}', [UserController::class, 'destroy'])
         ->name('user.delete')
         ->middleware('permission:user.delete');
+
+    
 
 });
