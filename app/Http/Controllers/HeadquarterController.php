@@ -95,4 +95,32 @@ class HeadquarterController extends Controller
         }
         return response()->json($response); 
     }
+
+    //eliminar un equipo
+
+    public function destroy(string $id)
+    {
+        $headquarter = Headquarter::find($id);
+        if (!$headquarter){
+            $response= [
+                "message"=>"No existe la sede que quiere eliminar", 
+            ];
+        } else {
+            $locations = $headquarter->locations;
+         
+            if (!$locations->isEmpty()){
+                $response= [
+                    "message"=>"El registro no puede ser borrado ya que existen localizaciones asociadas a esta sede",
+                    "data"=>$locations 
+                ];
+            }else{
+                $headquarter->delete();
+                $response= [
+                    "message"=>"El registro se elimino correctamente",
+                    "data"=>$headquarter
+                ];    
+            }
+        }
+        return response()->json($response);
+    }
 }

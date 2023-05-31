@@ -53,6 +53,8 @@ Route::post('/headquarters/register', [HeadquarterController::class, 'register']
 Route::put('/headquarters/{id}', [HeadquarterController::class, 'update'])
     ->name('headquarters.update');
 
+Route::delete('/headquarters/{id}', [HeadquarterController::class, 'destroy'])
+    ->name('headquarters.delete');
 
 //rutas de locations 
 Route::get('/locations', [LocationController::class, 'index'])
@@ -67,6 +69,9 @@ Route::post('/locations/register', [LocationController::class, 'register'])
 Route::put('/locations/{id}', [LocationController::class, 'update'])
     ->name('locations.update');
 
+Route::delete('/locations/{id}', [LocationController::class, 'destroy'])
+    ->name('locations.delete');
+
 //ruta de devices
 Route::get('/devices', [DeviceController::class, 'index'])
     ->name('devices.index');
@@ -77,6 +82,11 @@ Route::get('/devices/{id}', [DeviceController::class, 'show'])
 Route::post('/devices/register', [DeviceController::class, 'register'])
     ->name('devices.register');
 
+Route::put('/devices/{id}', [DeviceController::class, 'update'])
+    ->name('devices.update');
+
+Route::delete('/devices/{id}', [DeviceController::class, 'destroy'])
+    ->name('devices.delete');
 
 // protected routes
 Route::group(['middleware'=>['auth:sanctum']], function(){

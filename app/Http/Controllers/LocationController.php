@@ -89,4 +89,30 @@ class LocationController extends Controller
         }
         return response()->json($response);
     }
+
+    public function destroy(string $id)
+    {
+        $location = Location::find($id);
+        if (!$location){
+            $response= [
+                "message"=>"No existe la locacion que quiere eliminar", 
+            ];
+        } else {
+            $devices = $location->devices;
+         
+            if (!$devices->isEmpty()){
+                $response= [
+                    "message"=>"El registro no puede ser borrado ya que existen equipos asociados a esta locacion",
+                    "data"=>$devices 
+                ];
+            }else{
+                $location->delete();
+                $response= [
+                    "message"=>"El registro se elimino correctamente",
+                    "data"=>$location
+                ];    
+            }
+        }
+        return response()->json($response);
+    }
 }
