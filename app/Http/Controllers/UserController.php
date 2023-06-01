@@ -45,18 +45,20 @@ class UserController extends Controller
 
     public function index()
     {
-        $users = User::all();
+        $users=User::with('roles')->get(); 
+        // $users = User::all();
         if ($users->isEmpty()){
-            $data = [
+            $response = [
                 "message"=>"No hay datos disponibles"
             ];
         } else {
-            $data = [
+            $response = [
                 "message"=>"Datos recuperados exitosamente",
                 "data"=>$users
             ];
         }
-        return response()->json($data);
+        // dd($users[1]->roles[0]->name);
+        return response()->json($response);
     }
 
    /**
