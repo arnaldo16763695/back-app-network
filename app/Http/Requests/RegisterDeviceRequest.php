@@ -5,15 +5,13 @@ namespace App\Http\Requests;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
-use Illuminate\Validation\Rules\Password;
 
-class RegisterUserRequest extends FormRequest
+
+class RegisterDeviceRequest extends FormRequest
 {
-
     /**
      * Determine if the user is authorized to make this request.
      */
-
     public function authorize(): bool
     {
         return true;
@@ -24,29 +22,26 @@ class RegisterUserRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array|string>
      */
-
     public function rules(): array
     {
         return [
-            'name'=>'required|min:3|max:255',
-            'email'=>'required|email|unique:users',
-            'phone'=>'min:4',
-            'role_id'=> 'required|integer',
-            'password'=>['required', Password::min(8)
-                            ->letters()
-                            ->numbers()
-                            ->mixedCase()
-                            ->symbols(),
-            ],
+            'name'=>'required|min:3|max:50',
+            'manufacturer'=>'required|min:5|max:50',
+            'model'=>'required|min:3|max:50',
+            'serial'=>'required|min:3|max:70',
+            'code'=>'required|min:3|max:50',
+            'observation'=>'required|min:3|max:500',
+            'description'=>'required|min:3|max:255',
+            'status'=>'required|min:1|max:1',
+            'location_id'=>'required',
         ];
     }
-
-   public function failedValidation(Validator $validator) {
+    public function filedValidation(Validator $validator){
         throw new HttpResponseException(response()->json([
             'success'=> false,
             'message'=> 'Errores de Validacion',
             'data'      => $validator->errors()
         ]));
+    
     }
-
 }
