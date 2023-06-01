@@ -154,10 +154,16 @@ class AuthController extends Controller
             return response()->json($data,401);
         }
         $user = User::where('email', $request->email)->firstOrFail();
+        $role_name = $user->getRoleNames();
+        $role= Role::where('name',$role_name)->firstOrFail();
         $token = $user->createToken('appnettokken')->plainTextToken;
         $data = [
             "message"=>"Usuario Autorizado",
-            "token" => $token
+            "token" => $token,
+            "user_name"=>$user->name,
+            "user_id"=>$user->id,
+            "role_name"=>$role->name,
+            "role_id"=>$role->id,
         ];
         return response()->json($data);
     }
