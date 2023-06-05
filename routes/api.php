@@ -6,6 +6,7 @@ use App\Http\Controllers\HeadquarterController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\PruebaController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\StatusController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Models\Headquarter;
@@ -89,6 +90,17 @@ Route::put('/devices/{id}', [DeviceController::class, 'update'])
 
 Route::delete('/devices/{id}', [DeviceController::class, 'destroy'])
     ->name('devices.delete');
+
+//ruta de status
+Route::get('/statuses', [StatusController::class, 'index'])
+    ->name('statuses.index');
+
+Route::get('/statuses/{id}', [StatusController::class, 'show'])
+    ->name('statuses.show');
+
+Route::post('/statuses/register', [StatusController::class, 'register'])
+    ->name('statuses.register');
+
 
 // protected routes
 Route::group(['middleware'=>['auth:sanctum']], function(){
