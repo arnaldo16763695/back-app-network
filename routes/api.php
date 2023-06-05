@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DeviceController;
 use App\Http\Controllers\HeadquarterController;
 use App\Http\Controllers\LocationController;
+use App\Http\Controllers\PruebaController;
 use App\Http\Controllers\RoleController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
@@ -27,6 +28,7 @@ use GuzzleHttp\Psr7\Request;
     // return $request->auth();
 // });
 
+Route::get('/prueba', [PruebaController::class, 'index']);
 // public routes
 Route::post('/auth/login',[AuthController::class,'login'])
     ->name('auth.login');
@@ -56,12 +58,12 @@ Route::put('/headquarters/{id}', [HeadquarterController::class, 'update'])
 Route::delete('/headquarters/{id}', [HeadquarterController::class, 'destroy'])
     ->name('headquarters.delete');
 
-//rutas de locations 
+//rutas de locations
 Route::get('/locations', [LocationController::class, 'index'])
-    ->name('locations.index');  
-    
+    ->name('locations.index');
+
 Route::get('/locations/{id}', [LocationController::class, 'show'])
-    ->name('locations.show'); 
+    ->name('locations.show');
 
 Route::post('/locations/register', [LocationController::class, 'register'])
     ->name('locations.register');
@@ -115,6 +117,14 @@ Route::group(['middleware'=>['auth:sanctum']], function(){
         ->name('user.delete')
         ->middleware('permission:user.delete');
 
-    
+    Route::fallback(function(){
+        return response()->json(
+            [
+                'message' => 'La Página solicitada no existe o no ha sido encontrada.',
+                'status' => 404
+            ],
+            404
+        );
+    });
 
 });

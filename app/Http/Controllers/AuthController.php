@@ -92,10 +92,10 @@ class AuthController extends Controller
         if (!$role){
             $response=[
                 'message'=>'El rol indicado no se encuentra en la base de datos',
-                'status'=>400,
+                'status'=>204,
             ];
 
-            return response()->json($response,400);
+            return response()->json($response,204);
         }
         $user=User::create([
             'name'=>$request->name,
