@@ -7,6 +7,7 @@ use App\Http\Controllers\LocationController;
 use App\Http\Controllers\PruebaController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\StatusController;
+use App\Http\Controllers\TypeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Models\Headquarter;
@@ -101,6 +102,27 @@ Route::get('/statuses/{id}', [StatusController::class, 'show'])
 Route::post('/statuses/register', [StatusController::class, 'register'])
     ->name('statuses.register');
 
+Route::put('/statuses/{id}', [StatusController::class, 'update'])
+    ->name('statuses.update');
+
+Route::delete('/statuses/{id}', [StatusController::class, 'destroy'])
+    ->name('statuses.delete');
+
+//ruta de tipos de equipos (Type)
+Route::get('/types', [TypeController::class, 'index'])
+    ->name('types.index');
+
+Route::get('/types/{id}', [TypeController::class, 'show'])
+    ->name('types.show');
+
+Route::post('/types/register', [TypeController::class, 'register'])
+    ->name('types.register');
+
+Route::put('/types/{id}', [TypeController::class, 'update'])
+    ->name('types.update');
+
+Route::delete('/types/{id}', [TypeController::class, 'destroy'])
+    ->name('types.delete');
 
 // protected routes
 Route::group(['middleware'=>['auth:sanctum']], function(){

@@ -1,17 +1,17 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Http\Requests\RegisterStatusRequest;
+use App\Http\Requests\RegisterTypeRequest;
 use Illuminate\Http\Request;
-use App\Models\Status;
-class StatusController extends Controller
+use App\Models\Type;
+class TypeController extends Controller
 {
     public function index()
     {
-//mostrar todos los status
-        $statuses = Status::all();
+//mostrar todos los tipos de equipos (type)
+        $types = Type::all();
 
-        if ($statuses->isEmpty()) {
+        if ($types->isEmpty()) {
             $response = [
 
                 'message' => 'No hay datos disponibles',
@@ -20,18 +20,18 @@ class StatusController extends Controller
             $response = [
 
                 'message' => 'Datos recuperados exitosamente',
-                'data' => $statuses
+                'data' => $types
             ];
         }
         return response()->json($response);
     }
-//mustrar un status
+//mostrar un equipo (type)
 
 public function show($id)
 {
-    $statuses = Status::find($id);
+    $types = Type::find($id);
 
-    if ($statuses === null) {
+    if ($types === null) {
 
         $response = [
             'message' => 'No hay datos disponibles'
@@ -40,61 +40,63 @@ public function show($id)
 
         $response = [
             'menssage' => 'Datos recuperados exitosamente',
-            'data' => $statuses
+            'data' => $types
         ];
     }
     return response()->json($response);
 }
 
-//registrar un status (equipo)
+//registrar un type (equipo)
 
-public function register(RegisterStatusRequest $request)
+public function register(RegisterTypeRequest $request)
 {
-    $statuses = new Status();
-    $statuses->name = $request->name;
-    $statuses->save();
+    $types = new Type();
+    $types->name = $request->name;
+    $types->save();
 
     $response = [
         'message' => 'Registro creado exitosamente',
         'status' => 201,
-        'data' => $statuses
+        'data' => $types
     ];
 
     return response()->json($response, 201);
 }
 
-public function update(RegisterStatusRequest $request, $id)
+//actualizar un equipo (type)
+public function update(RegisterTypeRequest $request, $id)
     {
-        $statuses = Status::find($id);
-        if (!$statuses) {
+        $types = Type::find($id);
+        if (!$types) {
             $response = [
                 "message" => "Registro no existente",
             ];
         } else {
 
-            $statuses->name = $request->name;
-            $statuses->save();
+            $types->name = $request->name;
+            $types->save();
 
             $response = [
                 "message" => "registro actualizado exitosamente",
                 "status" => 201,
-                "data" => $statuses
+                "data" => $types
             ];
         }
         return response()->json($response);
     }
 
+    //eliminar un equipo
     public function destroy(string $id)
     {
-        $statuses = Status::find($id);
-        if ($statuses == null) {
-            $data = ["message" => "No existe el status solicitado"];
+        $types = Type::find($id);
+        if ($types == null) {
+            $data = ["message" => "No existe el equipo solicitado"];
         } else {
-            $statuses->delete();
+            $types->delete();
 
             $data =[
-                "message"=>"Datos de status borrado exitosamente",
-                "data"=>$statuses
+                "message"=>"Datos de equipo borrado exitosamente",
+                "data"=>$types
             ];
         }
         return response()->json($data);
