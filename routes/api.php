@@ -93,6 +93,13 @@ Route::delete('/devices/{id}', [DeviceController::class, 'destroy'])
 // protected routes
 Route::group(['middleware'=>['auth:sanctum']], function(){
 
+    Route::post('/resetPassword', [AuthController::class, 'resetPassword'])
+        ->name('resetPassword')
+        ->middleware('permission:auth.resetPassword');
+
+    Route::post('/changePassword', [AuthController::class, 'changePassword'])
+        ->name('changePassword');
+
     Route::post('/auth/register',[AuthController::class,'register'])
         ->name('auth.register')
         ->middleware('permission:auth.register');

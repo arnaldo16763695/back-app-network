@@ -92,11 +92,12 @@ class AuthController extends Controller
         if (!$role){
             $response=[
                 'message'=>'El rol indicado no se encuentra en la base de datos',
-                'status'=>204,
+                'status'=>200,
             ];
 
-            return response()->json($response,204);
+            return response()->json($response,200);
         }
+
         $user=User::create([
             'name'=>$request->name,
             'email'=>$request->email,
@@ -104,12 +105,24 @@ class AuthController extends Controller
             'password'=>Hash::make($request->password)
         ])->assignRole($role);
 
+        $user_role = [
+            "id"=>$role->id,
+            "name"=>$role->name
+        ];
+
+        $data = [
+            "id"=>$user->id,
+            "name"=>$user->name,
+            "email"=>$user->email,
+            "phone"=>$user->phone,
+            "role"=>$user_role
+        ];
         // $token=$user->createToken('appnettoken')->plainTextToken;
 
         $response=[
             'message'=>'Registro creado',
             'status'=>201,
-            'user'=>$user
+            'user'=>$data
             // 'token'=>$token
         ];
 
@@ -184,7 +197,6 @@ class AuthController extends Controller
      *     )
      * )
      */
-
      public function logout() {
         Auth()->user()->tokens()->delete();
         $data = [
@@ -193,8 +205,37 @@ class AuthController extends Controller
         return response()->json($data);
     }
 
+    public function resetPassword(Request $request) {
+        $user = User::where('email', $request->email)->first();
+        if($user){
+            $user->password =Hash::make($request->new_password);
+            $user->save();
+            Auth()->user()->tokens()->delete();
+            $response = [
+                "message"=>"Contraseña actualizada correctamente",
+                "user"=>$request->email,
+                "status"=>200
+            ];
+        }else{
+            $response = [
+                "message"=>"El usuario no existe",
+                "status"=>200
+            ];
+        }
+        return response()->json($response);
+    }
 
-
+    public function changePassword(Request $request) {
+        $user = User::find(Auth::id());
+        $user->password = Hash::make($request->new_password);
+        $user->save();
+        $response=[
+            "message"=>"Cambio de contraseña exitoso",
+            "status"=>200
+        ];
+        Auth()->user()->tokens()->delete();
+        return response()->json($response);
+    }
 /**
      * ( Asigna un Rol a un usuario identificado por id )
      * @OA\Post(

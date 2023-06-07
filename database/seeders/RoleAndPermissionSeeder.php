@@ -18,6 +18,7 @@ class RoleAndPermissionSeeder extends Seeder
         Permission::create(['name'=>'auth.register']);
         Permission::create(['name'=>'auth.roletouser']);
         Permission::create(['name'=>'auth.rmvroletouser']);
+        Permission::create(['name'=>'auth.resetPassword']);
         Permission::create(['name'=>'auth.login']);
         Permission::create(['name'=>'auth.logout']);
         Permission::create(['name'=>'user.index']);
@@ -30,6 +31,7 @@ class RoleAndPermissionSeeder extends Seeder
         Role::create(['name'=>'Admin'])
         ->givePermissionTo([
             'auth.register',
+            'auth.resetPassword',
             'auth.roletouser',
             'auth.rmvroletouser',
             'auth.login',
