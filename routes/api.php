@@ -30,8 +30,6 @@ use GuzzleHttp\Psr7\Request;
     // return $request->auth();
 // });
 
-Route::get('/prueba', [PruebaController::class, 'index']);
-// public routes
 Route::post('/auth/login',[AuthController::class,'login'])
     ->name('auth.login');
 
@@ -75,6 +73,9 @@ Route::put('/locations/{id}', [LocationController::class, 'update'])
 
 Route::delete('/locations/{id}', [LocationController::class, 'destroy'])
     ->name('locations.delete');
+
+Route::get('/locHead/{id}', [LocationController::class, 'locHead'])
+    ->name('locations.locHead');
 
 //ruta de devices
 Route::get('/devices', [DeviceController::class, 'index'])
