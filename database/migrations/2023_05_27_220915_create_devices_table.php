@@ -20,13 +20,11 @@ return new class extends Migration
             $table->string('code');
             $table->text('observation');
             $table->text('description');
-            $table->boolean('status');
             $table->unsignedBigInteger('location_id');
             $table->foreign('location_id')->references('id')->on('locations');
             $table->timestamps();
         });
     }
-
     /**
      * Reverse the migrations.
      */

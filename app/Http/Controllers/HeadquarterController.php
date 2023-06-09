@@ -3,9 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\RegisterHeadquarterRequest;
-use App\Models\Device;
 use App\Models\Headquarter;
-use Illuminate\Http\Request;
 
 class HeadquarterController extends Controller
 {
@@ -26,7 +24,7 @@ class HeadquarterController extends Controller
         return response()->json($response);
     }
 
-    //Mostrar una unica sede 
+    //Mostrar una unica sede
 
     public function show($id)
     {
@@ -40,7 +38,6 @@ class HeadquarterController extends Controller
             ];
         } else {
 
-
             $response = [
 
                 'message' => 'Datos recuperados exitosamente',
@@ -50,7 +47,7 @@ class HeadquarterController extends Controller
         return response()->json($response);
     }
 
-    //registrar un equipo 
+    //registrar un equipo
 
     public function register(RegisterHeadquarterRequest $request)
     {
@@ -63,7 +60,7 @@ class HeadquarterController extends Controller
 
         $response=[
             'message'=>'Registro creado exitosamente',
-            'status'=>201, 
+            'status'=>201,
             'data'=> $headquarter
         ];
 
@@ -75,25 +72,25 @@ class HeadquarterController extends Controller
         $headquarter = Headquarter::find($id);
         if (!$headquarter){
             $response= [
-                "message"=>"El registro no existe", 
+                "message"=>"El registro no existe",
                 "status"=> 400
             ];
 
-            
+
         }else{
             $headquarter->name= $request->name;
             $headquarter->state= $request->state;
             $headquarter->city= $request->city;
             $headquarter->address= $request->address;
             $headquarter->save();
-            
+
             $response = [
                 "message"=>"Registro actualizado exitosamente",
                 "status"=> 201,
-                "data"=> $headquarter    
+                "data"=> $headquarter
             ];
         }
-        return response()->json($response); 
+        return response()->json($response);
     }
 
     //eliminar un equipo
@@ -103,22 +100,22 @@ class HeadquarterController extends Controller
         $headquarter = Headquarter::find($id);
         if (!$headquarter){
             $response= [
-                "message"=>"No existe la sede que quiere eliminar", 
+                "message"=>"No existe la sede que quiere eliminar",
             ];
         } else {
             $locations = $headquarter->locations;
-         
+
             if (!$locations->isEmpty()){
                 $response= [
                     "message"=>"El registro no puede ser borrado ya que existen localizaciones asociadas a esta sede",
-                    "data"=>$locations 
+                    "data"=>$locations
                 ];
             }else{
                 $headquarter->delete();
                 $response= [
                     "message"=>"El registro se elimino correctamente",
                     "data"=>$headquarter
-                ];    
+                ];
             }
         }
         return response()->json($response);
