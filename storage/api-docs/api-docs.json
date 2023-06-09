@@ -519,36 +519,21 @@
                                             "type": "string",
                                             "example": "Datos recuperados exitosamente"
                                         },
-                                        "users": {
+                                        "status": {
+                                            "type": "number",
+                                            "example": "200"
+                                        },
+                                        "data": {
                                             "type": "array",
                                             "items": {
-                                                "properties": {
-                                                    "id": {
-                                                        "type": "number",
-                                                        "example": "1"
+                                                "anyOf": [
+                                                    {
+                                                        "$ref": "#/components/schemas/User1Schema"
                                                     },
-                                                    "name": {
-                                                        "type": "string",
-                                                        "example": "Peter Parker"
-                                                    },
-                                                    "email": {
-                                                        "type": "string",
-                                                        "example": "pparker@marvel.net"
-                                                    },
-                                                    "phone": {
-                                                        "type": "string",
-                                                        "example": "0419-999.88.77"
-                                                    },
-                                                    "created_at": {
-                                                        "type": "string",
-                                                        "example": "2023-05-15 02:36:54"
-                                                    },
-                                                    "updated_at": {
-                                                        "type": "string",
-                                                        "example": "2023-05-15 02:36:54"
+                                                    {
+                                                        "$ref": "#/components/schemas/User2Schema"
                                                     }
-                                                },
-                                                "type": "object"
+                                                ]
                                             }
                                         }
                                     },
@@ -565,7 +550,7 @@
                 "tags": [
                     "Users"
                 ],
-                "summary": "( Muestra un usuario identificado por id )",
+                "summary": "( Muestra un usuario seleccionado por id )",
                 "operationId": "d8f696420bea235f4916124c9ba1c507",
                 "parameters": [
                     {
@@ -588,37 +573,46 @@
                                             "type": "string",
                                             "example": "Datos recuperados exitosamente"
                                         },
-                                        "users": {
-                                            "type": "array",
-                                            "items": {
-                                                "properties": {
-                                                    "id": {
-                                                        "type": "number",
-                                                        "example": "1"
-                                                    },
-                                                    "name": {
-                                                        "type": "string",
-                                                        "example": "Peter Parker"
-                                                    },
-                                                    "email": {
-                                                        "type": "string",
-                                                        "example": "pparker@marvel.net"
-                                                    },
-                                                    "phone": {
-                                                        "type": "string",
-                                                        "example": "0419-999.88.77"
-                                                    },
-                                                    "created_at": {
-                                                        "type": "string",
-                                                        "example": "2023-05-15 02:36:54"
-                                                    },
-                                                    "updated_at": {
-                                                        "type": "string",
-                                                        "example": "2023-05-15 02:36:54"
-                                                    }
+                                        "status": {
+                                            "type": "number",
+                                            "example": "200"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "number",
+                                                    "example": "1"
                                                 },
-                                                "type": "object"
-                                            }
+                                                "name": {
+                                                    "type": "string",
+                                                    "example": "Peter Parker"
+                                                },
+                                                "email": {
+                                                    "type": "string",
+                                                    "example": "pparker@marvel.net"
+                                                },
+                                                "phone": {
+                                                    "type": "string",
+                                                    "example": "0412-999.88.77"
+                                                },
+                                                "roles": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "number",
+                                                                "example": "1"
+                                                            },
+                                                            "name": {
+                                                                "type": "string",
+                                                                "example": "Admin"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
                                         }
                                     },
                                     "type": "object"
@@ -843,6 +837,82 @@
         }
     },
     "components": {
+        "schemas": {
+            "User1Schema": {
+                "properties": {
+                    "id": {
+                        "type": "number",
+                        "example": "1"
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "Peter Parker"
+                    },
+                    "email": {
+                        "type": "string",
+                        "example": "pparker@marvel.net"
+                    },
+                    "phone": {
+                        "type": "string",
+                        "example": "0412-999.88.77"
+                    },
+                    "roles": {
+                        "type": "array",
+                        "items": {
+                            "properties": {
+                                "id": {
+                                    "type": "number",
+                                    "example": "1"
+                                },
+                                "name": {
+                                    "type": "string",
+                                    "example": "Admin"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                },
+                "type": "object"
+            },
+            "User2Schema": {
+                "properties": {
+                    "id": {
+                        "type": "number",
+                        "example": "2"
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "Tony Stark"
+                    },
+                    "email": {
+                        "type": "string",
+                        "example": "tstark@marvel.net"
+                    },
+                    "phone": {
+                        "type": "string",
+                        "example": "0412-888.88.88"
+                    },
+                    "roles": {
+                        "type": "array",
+                        "items": {
+                            "properties": {
+                                "id": {
+                                    "type": "number",
+                                    "example": "2"
+                                },
+                                "name": {
+                                    "type": "string",
+                                    "example": "Supervisor"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                },
+                "type": "object"
+            }
+        },
         "securitySchemes": {
             "bearerAuth": {
                 "type": "http",

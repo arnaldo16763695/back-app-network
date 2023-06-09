@@ -12,14 +12,20 @@ class RoleController extends Controller
         if ($roles->isEmpty()){
             $response = [
                 "message"=>"No hay datos disponibles",
-                "status"=>204,
+                "status"=>200,
             ];
             return response()->json($response, 204);
         } else {
+            foreach($roles as $role){
+                $data[]=[
+                    "id"=>$role->id,
+                    "name"=>$role->name,
+                ];
+            }
             $response = [
                 "message"=>"Datos recuperados exitosamente",
                 "status"=>200,
-                "roles"=>$roles
+                "roles"=>$data
             ];
             return response()->json($response, 200);
         }

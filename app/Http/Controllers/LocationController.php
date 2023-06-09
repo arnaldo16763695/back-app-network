@@ -18,7 +18,7 @@ class LocationController extends Controller
         $response= [
             'message'=>'No hay datos disponibles'
         ];
-    }else{ 
+    }else{
         $response= [
             'message'=>'Datos recuperados exitosamente',
             'data'=>$locations
@@ -28,7 +28,7 @@ class LocationController extends Controller
         return response()->json($response);
     }
 
-    //mostrar una locacion en especifico 
+    //mostrar una locacion en especifico
 
     public function show($id)
     {
@@ -58,10 +58,10 @@ class LocationController extends Controller
 
         $response=[
             'message'=>'Registro creado exitosamente',
-            'status'=>201, 
+            'status'=>201,
             'data'=> $location
         ];
-        
+
           return response()->json($response,201);
 
     }
@@ -72,15 +72,15 @@ class LocationController extends Controller
         if(!$location||!$headquarter){
             $response=[
                 "message"=>"Registro no existe o la sede no existe"
-            
+
             ];
         }else{
-            
+
             $location->name=$request->name;
             $location->observation=$request->observation;
             $location->headquarter_id=$request->headquarter_id;
             $location->save();
-            
+
             $response=[
                 "message"=>"registro actualizado exitosamente",
                 "status"=>201,
@@ -95,24 +95,44 @@ class LocationController extends Controller
         $location = Location::find($id);
         if (!$location){
             $response= [
-                "message"=>"No existe la locacion que quiere eliminar", 
+                "message"=>"No existe la locacion que quiere eliminar",
             ];
         } else {
             $devices = $location->devices;
-         
+
             if (!$devices->isEmpty()){
                 $response= [
                     "message"=>"El registro no puede ser borrado ya que existen equipos asociados a esta locacion",
-                    "data"=>$devices 
+                    "data"=>$devices
                 ];
             }else{
                 $location->delete();
                 $response= [
                     "message"=>"El registro se elimino correctamente",
                     "data"=>$location
-                ];    
+                ];
             }
         }
         return response()->json($response);
     }
+    // Recupera todas las Locaciones de una Sede
+    // recibe como parametro el {id} de la Sede
+    public function locHead($id) {
+        $headquarter=Headquarter::find($id);
+        if ($headquarter===null){
+            $response = [
+                "message"=>"La sede seleccionada no existe",
+                "status"=>200
+            ];
+        }else{
+            $locations=Location::select('id','name')->where('headquarter_id',$id)->get();
+            $response=[
+                "message"=>"Locaciones recuperadas exitosamente",
+                "status"=>200,
+                "locations"=>$locations
+            ];
+        }
+        return response()->json($response, 200);
+    }
+
 }

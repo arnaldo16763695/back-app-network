@@ -10,19 +10,24 @@ class Device extends Model
     use HasFactory;
     protected $fillable=[
       'name',
-      'manofacturer',
+      'manufacturer',
       'model',
       'serial',
       'code',
       'observation',
       'description',
-      'status',
-      'location_id'
+      'location_id',
+      'statuses_id'
     ];
 
     public function location()
     {
       return $this->belongsTo(Location::class);
-
     }
+
+    public function status()
+    {
+      return $this->belongsTo(Status::class);
+    }
+   
 }
