@@ -25,7 +25,7 @@ class UpdateUserRequest extends FormRequest
     {
         return [
             "name"      =>  "required|min:3|max:255",
-            "email"     =>  "required|unique:users,email, ".$this->id,
+            "email"     =>  "required|email|unique:users,email, ".$this->id,
             "phone"     =>  "min:4|string",
             "role_id"   =>  "required|integer"
         ];

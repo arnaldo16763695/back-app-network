@@ -187,69 +187,69 @@ class UserController extends Controller
         return response()->json($response);
     }
 
-   /**
-     * ( Actualiza los datos de un usuario identificado por id )
-     * @OA\Put(
-     *     path="/api/user/{id}",
-     *     tags={"Users"},
-     *     security={{"bearerAuth":{}}},
-     *     @OA\Parameter(
-     *         in="path",
-     *         name="id",
-     *         required=true,
-     *         @OA\Schema(type="number")
-     *     ),
-     *     @OA\RequestBody(
-     *         @OA\MediaType(
-     *             mediaType="application/json",
-     *            @OA\Schema(
-     *                @OA\Property( property="name", type="string"),
-     *                @OA\Property( property="email",type="string"),
-     *                @OA\Property( property="phone",type="string"),
-     *                @OA\Property( property="role_id",type="integer"),
-     *                example={"name": "Peter Parker", "email": "pparker@marvel.net", "phone":"0419-999.88.77" , "role_id":1}
-     *            )
-     *        )
-     *     ),
-     *     @OA\Response(
-     *         response=200,
-     *         description="Datos actualizados",
-     *         @OA\JsonContent(
-     *             @OA\Property(property="message", type="string", example="información de usuario actualizada exitosamente"),
-     *             @OA\Property(
-     *                 property="data",
-     *                 type="object",
-     *                 @OA\Property(property="id",type="number",example="1"),
-     *                 @OA\Property(property="name", type="string", example="Peter Parker"),
-     *                 @OA\Property(property="email",type="string",example="pparker@marvel.net"),
-     *                 @OA\Property(property="phone",type="string",example="0419-999.88.77"),
-     *                 @OA\Property(property="created_at",type="string",example="2023-05-15 02:36:54"),
-     *                 @OA\Property(property="updated_at",type="string",example="2023-05-15 02:36:54"),
-     *                 @OA\Property(
-     *                     type="array",
-     *                     property="roles",
-     *                     @OA\Items(
-     *                         type="object",
-     *                         @OA\Property(property="id",type="number",example="1"),
-     *                         @OA\Property(property="name",type="string",example="Admin"),
-     *                         @OA\Property(property="guard_name",type="string",example="web"),
-     *                         @OA\Property(property="created_at",type="string",example="2023-05-15 02:36:54"),
-     *                         @OA\Property(property="updated_at",type="string",example="2023-05-15 02:36:54"),
-     *                         @OA\Property(
-     *                             property="pivot",
-     *                             type="object",
-     *                             @OA\Property(property="model_id",type="number",example="1"),
-     *                             @OA\Property(property="role_id",type="number",example="1"),
-     *                             @OA\Property(property="model_type",type="string",example="App\Model\User")
-     *                         )
-     *                     )
-     *                 )
-     *             )
-     *         )
-     *     )
-     *
-     * )
-     */
+    /**
+    * ( Actualiza los datos de un usuario identificado por id )
+    * @OA\Put(
+    *     path="/api/user/{id}",
+    *     tags={"Users"},
+    *     security={{"bearerAuth":{}}},
+    *     @OA\Parameter(
+    *         in="path",
+    *         name="id",
+    *         required=true,
+    *         @OA\Schema(type="number")
+    *     ),
+    *     @OA\RequestBody(
+    *         @OA\MediaType(
+    *             mediaType="application/json",
+    *            @OA\Schema(
+    *                @OA\Property( property="name", type="string"),
+    *                @OA\Property( property="email",type="string"),
+    *                @OA\Property( property="phone",type="string"),
+    *                @OA\Property( property="role_id",type="integer"),
+    *                example={"name": "Peter Parker", "email": "pparker@marvel.net", "phone":"0419-999.88.77" , "role_id":1}
+    *            )
+    *        )
+    *     ),
+    *     @OA\Response(
+    *         response=200,
+    *         description="Datos actualizados",
+    *         @OA\JsonContent(
+    *             @OA\Property(property="message", type="string", example="información de usuario actualizada exitosamente"),
+    *             @OA\Property(
+    *                 property="data",
+    *                 type="object",
+    *                 @OA\Property(property="id",type="number",example="1"),
+    *                 @OA\Property(property="name", type="string", example="Peter Parker"),
+    *                 @OA\Property(property="email",type="string",example="pparker@marvel.net"),
+    *                 @OA\Property(property="phone",type="string",example="0419-999.88.77"),
+    *                 @OA\Property(property="created_at",type="string",example="2023-05-15 02:36:54"),
+    *                 @OA\Property(property="updated_at",type="string",example="2023-05-15 02:36:54"),
+    *                 @OA\Property(
+    *                     type="array",
+    *                     property="roles",
+    *                     @OA\Items(
+    *                         type="object",
+    *                         @OA\Property(property="id",type="number",example="1"),
+    *                         @OA\Property(property="name",type="string",example="Admin"),
+    *                         @OA\Property(property="guard_name",type="string",example="web"),
+    *                         @OA\Property(property="created_at",type="string",example="2023-05-15 02:36:54"),
+    *                         @OA\Property(property="updated_at",type="string",example="2023-05-15 02:36:54"),
+    *                         @OA\Property(
+    *                             property="pivot",
+    *                             type="object",
+    *                             @OA\Property(property="model_id",type="number",example="1"),
+    *                             @OA\Property(property="role_id",type="number",example="1"),
+    *                             @OA\Property(property="model_type",type="string",example="App\Model\User")
+    *                         )
+    *                     )
+    *                 )
+    *             )
+    *         )
+    *     )
+    *
+    * )
+    */
     public function update(UpdateUserRequest $request, string $id)
     {
         // Se busca el usuario a actualizar por medio de Elocuent
@@ -304,48 +304,58 @@ class UserController extends Controller
             $user->assignRole($role->name);
         }
         // Se prepara la respuesta con los datos recuperados, un mensaje de exito y codigo http
+        $data=[
+            "id"=>$user->id,
+            "name"=>$user->name,
+            "email"=>$user->email,
+            "phone"=>$user->phone,
+            "role"=>[
+                "id"=>$role->id,
+                "name"=>$role->name,
+            ]
+        ];
         $response = [
             "message"=>"información de usuario actualizada exitosamente",
             "status"=>200,
-            "data"=>$user
+            "data"=>$data
         ];
         // Se envia la respuesta en formato json
         return response()->json($response, 200);
     }
 
     /**
-     * ( Elimina los datos de un usuario identificado por id )
-     * @OA\Delete(
-     *     path="/api/user/{id}",
-     *     tags={"Users"},
-     *     security={{"bearerAuth":{}}},
-     *     @OA\Parameter(
-     *         in="path",
-     *         name="id",
-     *         required=true,
-     *         @OA\Schema(type="number")
-     *     ),
-     *
-     *     @OA\Response(
-     *         response=200,
-     *         description="Registro eliminado",
-     *         @OA\JsonContent(
-     *             @OA\Property(property="message", type="string", example="Registro eliminado exitosamente"),
-     *             @OA\Property(
-     *                 property="users",
-     *                 type="object",
-     *                 @OA\Property(property="id",type="number",example="1"),
-     *                 @OA\Property(property="name", type="string", example="Peter Parker"),
-     *                 @OA\Property(property="email",type="string",example="pparker@marvel.net"),
-     *                 @OA\Property(property="phone",type="string",example="0419-999.88.77"),
-     *                 @OA\Property(property="created_at",type="string",example="2023-05-15 02:36:54"),
-     *                 @OA\Property(property="updated_at",type="string",example="2023-05-15 02:36:54"),
-     *             )
-     *         )
-     *     )
-     *
-     * )
-     */
+    * ( Elimina los datos de un usuario identificado por id )
+    * @OA\Delete(
+    *     path="/api/user/{id}",
+    *     tags={"Users"},
+    *     security={{"bearerAuth":{}}},
+    *     @OA\Parameter(
+    *         in="path",
+    *         name="id",
+    *         required=true,
+    *         @OA\Schema(type="number")
+    *     ),
+    *
+    *     @OA\Response(
+    *         response=200,
+    *         description="Registro eliminado",
+    *         @OA\JsonContent(
+    *             @OA\Property(property="message", type="string", example="Registro eliminado exitosamente"),
+    *             @OA\Property(
+    *                 property="users",
+    *                 type="object",
+    *                 @OA\Property(property="id",type="number",example="1"),
+    *                 @OA\Property(property="name", type="string", example="Peter Parker"),
+    *                 @OA\Property(property="email",type="string",example="pparker@marvel.net"),
+    *                 @OA\Property(property="phone",type="string",example="0419-999.88.77"),
+    *                 @OA\Property(property="created_at",type="string",example="2023-05-15 02:36:54"),
+    *                 @OA\Property(property="updated_at",type="string",example="2023-05-15 02:36:54"),
+    *             )
+    *         )
+    *     )
+    *
+    * )
+    */
     public function destroy(string $id)
     {
         // Se busca el usuario a eliminar por medio de Elocuent
