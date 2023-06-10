@@ -118,7 +118,7 @@ class RoleAndPermissionSeeder extends Seeder
             'auth.login',
             'user.index',
             'user.show',
-
+            'user.update',
             'auth.register',
             'auth.changePassword',
             'auth.logout',
