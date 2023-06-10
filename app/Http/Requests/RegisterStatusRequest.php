@@ -3,6 +3,9 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException;
+
 
 class RegisterStatusRequest extends FormRequest
 {
@@ -31,6 +34,6 @@ class RegisterStatusRequest extends FormRequest
             'message'=> 'Errores de Validacion',
             'data'      => $validator->errors()
         ]));
-    
+
     }
 }

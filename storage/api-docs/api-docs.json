@@ -14,7 +14,7 @@
         "/api/auth/register": {
             "post": {
                 "tags": [
-                    "Users"
+                    "Auth_users"
                 ],
                 "summary": "( Crea un nuevo usuario )",
                 "operationId": "d764dd091cc4494ae0baf360b03319f3",
@@ -161,7 +161,7 @@
         "/api/auth/login": {
             "post": {
                 "tags": [
-                    "Users"
+                    "Auth_users"
                 ],
                 "summary": "( Otorga acceso a un usuario autenticado )",
                 "operationId": "8dcb70df1020986038d098cc08d05dae",
@@ -193,18 +193,29 @@
                             "application/json": {
                                 "schema": {
                                     "properties": {
-                                        "user": {
-                                            "properties": {
-                                                "message": {
-                                                    "type": "string",
-                                                    "example": "Usuario Autenticado"
-                                                },
-                                                "token": {
-                                                    "type": "string",
-                                                    "example": "8|xUiWgXHxkYUflJe1s8xjLPiGON78YsPG4NzkzK25"
-                                                }
-                                            },
-                                            "type": "object"
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Usuario Autorizado"
+                                        },
+                                        "token": {
+                                            "type": "string",
+                                            "example": "8|xUiWgXHxkYUflJe1s8xjLPiGON78YsPG4NzkzK25"
+                                        },
+                                        "user_name": {
+                                            "type": "string",
+                                            "example": "Peter Parker"
+                                        },
+                                        "user_id": {
+                                            "type": "number",
+                                            "example": "3"
+                                        },
+                                        "role_name": {
+                                            "type": "string",
+                                            "example": "Supervisor"
+                                        },
+                                        "role_id": {
+                                            "type": "number",
+                                            "example": "2"
                                         }
                                     },
                                     "type": "object"
@@ -218,9 +229,9 @@
         "/api/auth/logout": {
             "get": {
                 "tags": [
-                    "Users"
+                    "Auth_users"
                 ],
-                "summary": "( Revoca el acceso a un usuario autenticado )",
+                "summary": "( Revoca el acceso a un usuario autenticado)",
                 "operationId": "a8dd056be3e98a38c657f73ed6cdef2d",
                 "responses": {
                     "200": {
@@ -232,6 +243,10 @@
                                         "message": {
                                             "type": "string",
                                             "example": "Session cerrada exitosamente"
+                                        },
+                                        "status": {
+                                            "type": "string",
+                                            "example": "200"
                                         }
                                     },
                                     "type": "object"
@@ -247,12 +262,130 @@
                 ]
             }
         },
+        "/api/auth/resetPassword": {
+            "post": {
+                "tags": [
+                    "Auth_users"
+                ],
+                "summary": "( Permite a un usuario Admin restablecer la contraseña de cualquier usuario)",
+                "operationId": "ed3326bc53cbcc940f34d8b4048a745d",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object",
+                                "example": {
+                                    "email": "pparker@marvel.net",
+                                    "password": "Test@1234"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Restablece la contraseña de un susuario",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        },
+                                        "user": {
+                                            "type": "string"
+                                        },
+                                        "status": {
+                                            "type": "number"
+                                        }
+                                    },
+                                    "type": "object"
+                                },
+                                "example": {
+                                    "message": "Contraseña restablecida correctamente",
+                                    "user": "pparker@marvel.net",
+                                    "status": "200"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/auth/changePassword": {
+            "post": {
+                "tags": [
+                    "Auth_users"
+                ],
+                "summary": "( Permite a cualquier usuario que haya iniciado session cambiar su propia contraseña)",
+                "operationId": "f14f5289cf0692180aaabbbf369e1e9a",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "password": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object",
+                                "example": {
+                                    "password": "Test@1234"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Restablece la contraseña de un susuario",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        },
+                                        "status": {
+                                            "type": "number"
+                                        }
+                                    },
+                                    "type": "object"
+                                },
+                                "example": {
+                                    "message": "Cambio  de contraseña exitoso",
+                                    "status": "200"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/api/auth/roletouser": {
             "post": {
                 "tags": [
-                    "Users"
+                    "Auth_users"
                 ],
-                "summary": "( Asigna un Rol a un usuario identificado por id )",
+                "summary": "( Elimina roles previos y asigna un nuevo Rol a un usuario identificado por id )",
                 "operationId": "fe06a4bf56f689d250bcda4830330802",
                 "requestBody": {
                     "content": {
@@ -277,7 +410,7 @@
                 },
                 "responses": {
                     "201": {
-                        "description": "Asignacion de Rol a Usuario",
+                        "description": "Asignacion de Rol exitosa",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -285,6 +418,10 @@
                                         "message": {
                                             "type": "string",
                                             "example": "Rol asignado a usuario correctamente"
+                                        },
+                                        "status": {
+                                            "type": "number",
+                                            "example": "201"
                                         },
                                         "data": {
                                             "properties": {
@@ -304,58 +441,18 @@
                                                     "type": "string",
                                                     "example": "0419-999.88.77"
                                                 },
-                                                "created_at": {
-                                                    "type": "string",
-                                                    "example": "2023-05-15 02:36:54"
-                                                },
-                                                "updated_at": {
-                                                    "type": "string",
-                                                    "example": "2023-05-15 02:36:54"
-                                                },
-                                                "roles": {
-                                                    "type": "array",
-                                                    "items": {
-                                                        "properties": {
-                                                            "id": {
-                                                                "type": "number",
-                                                                "example": "1"
-                                                            },
-                                                            "name": {
-                                                                "type": "string",
-                                                                "example": "Admin"
-                                                            },
-                                                            "guard_name": {
-                                                                "type": "string",
-                                                                "example": "web"
-                                                            },
-                                                            "created_at": {
-                                                                "type": "string",
-                                                                "example": "2023-05-15 02:36:54"
-                                                            },
-                                                            "updated_at": {
-                                                                "type": "string",
-                                                                "example": "2023-05-15 02:36:54"
-                                                            },
-                                                            "pivot": {
-                                                                "properties": {
-                                                                    "model_id": {
-                                                                        "type": "number",
-                                                                        "example": "1"
-                                                                    },
-                                                                    "role_id": {
-                                                                        "type": "number",
-                                                                        "example": "1"
-                                                                    },
-                                                                    "model_type": {
-                                                                        "type": "string",
-                                                                        "example": "App\\Model\\User"
-                                                                    }
-                                                                },
-                                                                "type": "object"
-                                                            }
+                                                "role": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "number",
+                                                            "example": "1"
                                                         },
-                                                        "type": "object"
-                                                    }
+                                                        "name": {
+                                                            "type": "string",
+                                                            "example": "Admin"
+                                                        }
+                                                    },
+                                                    "type": "object"
                                                 }
                                             },
                                             "type": "object"
@@ -377,9 +474,9 @@
         "/api/auth/rmvroletouser": {
             "post": {
                 "tags": [
-                    "Users"
+                    "Auth_users"
                 ],
-                "summary": "( Retira un Rol a un usuario identificado por id )",
+                "summary": "( Revoca un Rol a un usuario identificado por id )",
                 "operationId": "afe1d69c6ceb77c7f709a4cf6fb984c5",
                 "requestBody": {
                     "content": {
@@ -403,17 +500,21 @@
                     }
                 },
                 "responses": {
-                    "201": {
-                        "description": "Revoca un Rol a un Usuario",
+                    "200": {
+                        "description": "Rol revocado exitosamente",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
                                         "message": {
                                             "type": "string",
-                                            "example": "Rol revocado usuario correctamente"
+                                            "example": "El Rol Admin ha sido revocado del usuario pparker@marvel.net"
                                         },
-                                        "data": {
+                                        "status": {
+                                            "type": "number",
+                                            "example": "200"
+                                        },
+                                        "user": {
                                             "properties": {
                                                 "id": {
                                                     "type": "number",
@@ -430,59 +531,19 @@
                                                 "phone": {
                                                     "type": "string",
                                                     "example": "0419-999.88.77"
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "role_remove": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "number",
+                                                    "example": "1"
                                                 },
-                                                "created_at": {
+                                                "name": {
                                                     "type": "string",
-                                                    "example": "2023-05-15 02:36:54"
-                                                },
-                                                "updated_at": {
-                                                    "type": "string",
-                                                    "example": "2023-05-15 02:36:54"
-                                                },
-                                                "roles": {
-                                                    "type": "array",
-                                                    "items": {
-                                                        "properties": {
-                                                            "id": {
-                                                                "type": "number",
-                                                                "example": "1"
-                                                            },
-                                                            "name": {
-                                                                "type": "string",
-                                                                "example": "Admin"
-                                                            },
-                                                            "guard_name": {
-                                                                "type": "string",
-                                                                "example": "web"
-                                                            },
-                                                            "created_at": {
-                                                                "type": "string",
-                                                                "example": "2023-05-15 02:36:54"
-                                                            },
-                                                            "updated_at": {
-                                                                "type": "string",
-                                                                "example": "2023-05-15 02:36:54"
-                                                            },
-                                                            "pivot": {
-                                                                "properties": {
-                                                                    "model_id": {
-                                                                        "type": "number",
-                                                                        "example": "1"
-                                                                    },
-                                                                    "role_id": {
-                                                                        "type": "number",
-                                                                        "example": "1"
-                                                                    },
-                                                                    "model_type": {
-                                                                        "type": "string",
-                                                                        "example": "App\\Model\\User"
-                                                                    }
-                                                                },
-                                                                "type": "object"
-                                                            }
-                                                        },
-                                                        "type": "object"
-                                                    }
+                                                    "example": "Admin"
                                                 }
                                             },
                                             "type": "object"
@@ -542,7 +603,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/api/user/{id}": {
@@ -620,7 +686,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             },
             "put": {
                 "tags": [
@@ -678,6 +749,10 @@
                                             "type": "string",
                                             "example": "información de usuario actualizada exitosamente"
                                         },
+                                        "status": {
+                                            "type": "string",
+                                            "example": "200"
+                                        },
                                         "data": {
                                             "properties": {
                                                 "id": {
@@ -696,58 +771,18 @@
                                                     "type": "string",
                                                     "example": "0419-999.88.77"
                                                 },
-                                                "created_at": {
-                                                    "type": "string",
-                                                    "example": "2023-05-15 02:36:54"
-                                                },
-                                                "updated_at": {
-                                                    "type": "string",
-                                                    "example": "2023-05-15 02:36:54"
-                                                },
-                                                "roles": {
-                                                    "type": "array",
-                                                    "items": {
-                                                        "properties": {
-                                                            "id": {
-                                                                "type": "number",
-                                                                "example": "1"
-                                                            },
-                                                            "name": {
-                                                                "type": "string",
-                                                                "example": "Admin"
-                                                            },
-                                                            "guard_name": {
-                                                                "type": "string",
-                                                                "example": "web"
-                                                            },
-                                                            "created_at": {
-                                                                "type": "string",
-                                                                "example": "2023-05-15 02:36:54"
-                                                            },
-                                                            "updated_at": {
-                                                                "type": "string",
-                                                                "example": "2023-05-15 02:36:54"
-                                                            },
-                                                            "pivot": {
-                                                                "properties": {
-                                                                    "model_id": {
-                                                                        "type": "number",
-                                                                        "example": "1"
-                                                                    },
-                                                                    "role_id": {
-                                                                        "type": "number",
-                                                                        "example": "1"
-                                                                    },
-                                                                    "model_type": {
-                                                                        "type": "string",
-                                                                        "example": "App\\Model\\User"
-                                                                    }
-                                                                },
-                                                                "type": "object"
-                                                            }
+                                                "role": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "number",
+                                                            "example": "1"
                                                         },
-                                                        "type": "object"
-                                                    }
+                                                        "name": {
+                                                            "type": "string",
+                                                            "example": "Admin"
+                                                        }
+                                                    },
+                                                    "type": "object"
                                                 }
                                             },
                                             "type": "object"
@@ -792,7 +827,11 @@
                                             "type": "string",
                                             "example": "Registro eliminado exitosamente"
                                         },
-                                        "users": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "200"
+                                        },
+                                        "data": {
                                             "properties": {
                                                 "id": {
                                                     "type": "number",
@@ -809,14 +848,6 @@
                                                 "phone": {
                                                     "type": "string",
                                                     "example": "0419-999.88.77"
-                                                },
-                                                "created_at": {
-                                                    "type": "string",
-                                                    "example": "2023-05-15 02:36:54"
-                                                },
-                                                "updated_at": {
-                                                    "type": "string",
-                                                    "example": "2023-05-15 02:36:54"
                                                 }
                                             },
                                             "type": "object"

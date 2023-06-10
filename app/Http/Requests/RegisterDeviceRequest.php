@@ -36,12 +36,13 @@ class RegisterDeviceRequest extends FormRequest
             'location_id'=>'required',
         ];
     }
+
     public function filedValidation(Validator $validator){
         throw new HttpResponseException(response()->json([
             'success'=> false,
             'message'=> 'Errores de Validacion',
             'data'      => $validator->errors()
         ]));
-    
+
     }
 }
