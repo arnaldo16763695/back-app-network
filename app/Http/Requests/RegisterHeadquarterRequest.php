@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
+
 class RegisterHeadquarterRequest extends FormRequest
 {
     /**
@@ -20,7 +21,7 @@ class RegisterHeadquarterRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array|string>
      */
-    
+
     public function rules(): array{
         return [
             'name'=>'required|min:3|max:255',
@@ -30,7 +31,7 @@ class RegisterHeadquarterRequest extends FormRequest
 
         ];
     }
-    
+
     public function failedValidation(Validator $validator) {
         throw new HttpResponseException(response()->json([
             'success'=> false,
@@ -38,5 +39,5 @@ class RegisterHeadquarterRequest extends FormRequest
             'data'      => $validator->errors()
         ]));
     }
-    
+
 }
