@@ -25,9 +25,14 @@ class Device extends Model
       return $this->belongsTo(Location::class);
     }
 
+    public function type()
+    {
+      return $this->belongsTo(Type::class);
+    }
+
     public function status()
     {
       return $this->belongsTo(Status::class);
     }
-   
+
 }

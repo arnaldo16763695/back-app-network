@@ -83,13 +83,13 @@ Route::group(['middleware'=>['auth:sanctum']], function(){
         ->name('devices.index')
         ->middleware('permission:devices.index');
 
-    Route::get('/devices/{id}', [DeviceController::class, 'show'])
-        ->name('devices.show')
-        ->middleware('permission:devices.show');
-
     Route::post('/devices/register', [DeviceController::class, 'register'])
         ->name('devices.register')
         ->middleware('permission:devices.register');
+
+    Route::get('/devices/{id}', [DeviceController::class, 'show'])
+        ->name('devices.show')
+        ->middleware('permission:devices.show');
 
     Route::put('/devices/{id}', [DeviceController::class, 'update'])
         ->name('devices.update')
@@ -104,13 +104,13 @@ Route::group(['middleware'=>['auth:sanctum']], function(){
         ->name('status.index')
         ->middleware('permission:status.index');
 
-    Route::get('/status/{id}', [StatusController::class, 'show'])
-        ->name('status.show')
-        ->middleware('permission:status.show');
-
     Route::post('/status/register', [StatusController::class, 'register'])
         ->name('status.register')
         ->middleware('permission:status.register');
+
+    Route::get('/status/{id}', [StatusController::class, 'show'])
+        ->name('status.show')
+        ->middleware('permission:status.show');
 
     Route::put('/status/{id}', [StatusController::class, 'update'])
         ->name('status.update')
@@ -125,13 +125,13 @@ Route::group(['middleware'=>['auth:sanctum']], function(){
         ->name('types.index')
         ->middleware('permission:types.index');
 
-    Route::get('/types/{id}', [TypeController::class, 'show'])
-        ->name('types.show')
-        ->middleware('permission:types.show');
-
     Route::post('/types/register', [TypeController::class, 'register'])
         ->name('types.register')
         ->middleware('permission:types.register');
+
+    Route::get('/types/{id}', [TypeController::class, 'show'])
+        ->name('types.show')
+        ->middleware('permission:types.show');
 
     Route::put('/types/{id}', [TypeController::class, 'update'])
         ->name('types.update')
@@ -146,13 +146,13 @@ Route::group(['middleware'=>['auth:sanctum']], function(){
         ->name('headquarters.index')
         ->middleware('permission:headquarters.index');
 
-    Route::get('/headquarters/{id}', [HeadquarterController::class, 'show'])
-        ->name('headquarters.show')
-        ->middleware('permission:headquarters.show');
-
     Route::post('/headquarters/register', [HeadquarterController::class, 'register'])
         ->name('headquarters.register')
         ->middleware('permission:headquarters.register');
+
+    Route::get('/headquarters/{id}', [HeadquarterController::class, 'show'])
+        ->name('headquarters.show')
+        ->middleware('permission:headquarters.show');
 
     Route::put('/headquarters/{id}', [HeadquarterController::class, 'update'])
         ->name('headquarters.update')
@@ -167,13 +167,13 @@ Route::group(['middleware'=>['auth:sanctum']], function(){
         ->name('locations.index')
         ->middleware('permission:locations.index');
 
-    Route::get('/locations/{id}', [LocationController::class, 'show'])
-        ->name('locations.show')
-        ->middleware('permission:locations.show');
-
     Route::post('/locations/register', [LocationController::class, 'register'])
         ->name('locations.register')
         ->middleware('permission:locations.register');
+
+    Route::get('/locations/{id}', [LocationController::class, 'show'])
+        ->name('locations.show')
+        ->middleware('permission:locations.show');
 
     Route::put('/locations/{id}', [LocationController::class, 'update'])
         ->name('locations.update')

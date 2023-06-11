@@ -562,6 +562,2021 @@
                 ]
             }
         },
+        "/api/devices": {
+            "get": {
+                "tags": [
+                    "Devices"
+                ],
+                "summary": "( Muestra todos los dispositivos registrados )",
+                "operationId": "fdbb50bf1d0489887b3b8c2e17c48923",
+                "responses": {
+                    "200": {
+                        "description": "Datos recuperados exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Datos recuperados exitosamente"
+                                        },
+                                        "status": {
+                                            "type": "number",
+                                            "example": "200"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "anyOf": [
+                                                    {
+                                                        "$ref": "#/components/schemas/Device1Schema"
+                                                    },
+                                                    {
+                                                        "$ref": "#/components/schemas/Device2Schema"
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/devices/{id}": {
+            "get": {
+                "tags": [
+                    "Devices"
+                ],
+                "summary": "( Mostrar datos de un unico equipo seleccionado por id)",
+                "operationId": "b004716f2d350e801eb4bb5cfae42aa3",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Datos recuperados exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Datos recuperados exitosamente"
+                                        },
+                                        "status": {
+                                            "type": "number",
+                                            "example": "200"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "anyOf": [
+                                                    {
+                                                        "$ref": "#/components/schemas/Device2Schema"
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Devices"
+                ],
+                "summary": "( Actualiza los datos de un dispositivo seleccionado por {id})",
+                "operationId": "4563e9a73c36c6b43f1bd9d71489f32d",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Router No.1"
+                                    },
+                                    "manufacturer": {
+                                        "type": "string",
+                                        "example": "tp-link"
+                                    },
+                                    "model": {
+                                        "type": "string",
+                                        "example": "AC64"
+                                    },
+                                    "serial": {
+                                        "type": "string",
+                                        "example": "SNR100000234567823ASD324"
+                                    },
+                                    "code": {
+                                        "type": "string",
+                                        "example": "VIT-RT031"
+                                    },
+                                    "observation": {
+                                        "type": "string",
+                                        "example": "adquirido en 2018"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "example": "Router dual band 2.4GHz & 5Ghz"
+                                    },
+                                    "type_id": {
+                                        "type": "number",
+                                        "example": "1"
+                                    },
+                                    "status_id": {
+                                        "type": "number",
+                                        "example": "1"
+                                    },
+                                    "location_id": {
+                                        "type": "number",
+                                        "example": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Registro actualizado exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Registro creado"
+                                        },
+                                        "status": {
+                                            "type": "integer",
+                                            "example": 201
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "string",
+                                                    "example": "Router No.1"
+                                                },
+                                                "name": {
+                                                    "type": "string",
+                                                    "example": "Router No.1"
+                                                },
+                                                "manufacturer": {
+                                                    "type": "string",
+                                                    "example": "tp-link"
+                                                },
+                                                "model": {
+                                                    "type": "string",
+                                                    "example": "AC64"
+                                                },
+                                                "serial": {
+                                                    "type": "string",
+                                                    "example": "SNR100000234567823ASD324"
+                                                },
+                                                "code": {
+                                                    "type": "string",
+                                                    "example": "VIT-RT031"
+                                                },
+                                                "observation": {
+                                                    "type": "string",
+                                                    "example": "adquirido en 2018"
+                                                },
+                                                "description": {
+                                                    "type": "string",
+                                                    "example": "Router dual band 2.4GHz & 5Ghz"
+                                                },
+                                                "location_id": {
+                                                    "type": "number",
+                                                    "example": "1"
+                                                },
+                                                "created_at": {
+                                                    "type": "number",
+                                                    "example": "2023-06-10T22:43:53.000000Z"
+                                                },
+                                                "updated_at": {
+                                                    "type": "number",
+                                                    "example": "2023-06-10T22:43:53.000000Z"
+                                                },
+                                                "status_id": {
+                                                    "type": "number",
+                                                    "example": "1"
+                                                },
+                                                "type_id": {
+                                                    "type": "number",
+                                                    "example": "1"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Devices"
+                ],
+                "summary": "( Elimina los datos de un dispositivo identificado por id )",
+                "operationId": "6ed86c27f475d7a79c802c50f54fa762",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Registro eliminado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Datos de dispositivo borrados exitosamente"
+                                        },
+                                        "status": {
+                                            "type": "string",
+                                            "example": "200"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "number",
+                                                    "example": "1"
+                                                },
+                                                "name": {
+                                                    "type": "string",
+                                                    "example": "Router No.1"
+                                                },
+                                                "manufacturer": {
+                                                    "type": "string",
+                                                    "example": "tp-link"
+                                                },
+                                                "model": {
+                                                    "type": "string",
+                                                    "example": "AC64"
+                                                },
+                                                "serial": {
+                                                    "type": "string",
+                                                    "example": "SNR100000234567823ASD324"
+                                                },
+                                                "code": {
+                                                    "type": "string",
+                                                    "example": "VIT-RT031"
+                                                },
+                                                "observation": {
+                                                    "type": "string",
+                                                    "example": "adquirido en 2018"
+                                                },
+                                                "description": {
+                                                    "type": "string",
+                                                    "example": "Router dual band 2.4GHz & 5Ghz"
+                                                },
+                                                "location_id": {
+                                                    "type": "number",
+                                                    "example": "1"
+                                                },
+                                                "created_at": {
+                                                    "type": "number",
+                                                    "example": "2023-06-10T22:43:53.000000Z"
+                                                },
+                                                "updated_at": {
+                                                    "type": "number",
+                                                    "example": "2023-06-10T22:43:53.000000Z"
+                                                },
+                                                "status_id": {
+                                                    "type": "number",
+                                                    "example": "1"
+                                                },
+                                                "type_id": {
+                                                    "type": "number",
+                                                    "example": "1"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/devices/register": {
+            "post": {
+                "tags": [
+                    "Devices"
+                ],
+                "summary": "( Crea un nuevo dispositivo)",
+                "operationId": "5b5203424fe9892c031803e181c9052d",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Router "
+                                    },
+                                    "manufacturer": {
+                                        "type": "string",
+                                        "example": "tp-link"
+                                    },
+                                    "model": {
+                                        "type": "string",
+                                        "example": "AC64"
+                                    },
+                                    "serial": {
+                                        "type": "string",
+                                        "example": "SNR100000234567823ASD324"
+                                    },
+                                    "code": {
+                                        "type": "string",
+                                        "example": "VIT-RT031"
+                                    },
+                                    "observation": {
+                                        "type": "string",
+                                        "example": "adquirido en 2018"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "example": "Router dual band 2.4GHz & 5Ghz"
+                                    },
+                                    "type_id": {
+                                        "type": "number",
+                                        "example": "1"
+                                    },
+                                    "status_id": {
+                                        "type": "number",
+                                        "example": "1"
+                                    },
+                                    "location_id": {
+                                        "type": "number",
+                                        "example": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Dispositivo Creado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Registro creado"
+                                        },
+                                        "status": {
+                                            "type": "integer",
+                                            "example": 201
+                                        },
+                                        "user": {
+                                            "properties": {
+                                                "name": {
+                                                    "type": "string",
+                                                    "example": "Router "
+                                                },
+                                                "manufacturer": {
+                                                    "type": "string",
+                                                    "example": "tp-link"
+                                                },
+                                                "model": {
+                                                    "type": "string",
+                                                    "example": "AC64"
+                                                },
+                                                "serial": {
+                                                    "type": "string",
+                                                    "example": "SNR100000234567823ASD324"
+                                                },
+                                                "code": {
+                                                    "type": "string",
+                                                    "example": "VIT-RT031"
+                                                },
+                                                "observation": {
+                                                    "type": "string",
+                                                    "example": "adquirido en 2018"
+                                                },
+                                                "description": {
+                                                    "type": "string",
+                                                    "example": "Router dual band 2.4GHz & 5Ghz"
+                                                },
+                                                "status_id": {
+                                                    "type": "number",
+                                                    "example": "1"
+                                                },
+                                                "location_id": {
+                                                    "type": "number",
+                                                    "example": "1"
+                                                },
+                                                "type_id": {
+                                                    "type": "number",
+                                                    "example": "1"
+                                                },
+                                                "created_at": {
+                                                    "type": "number",
+                                                    "example": "2023-06-10T22:27:14.000000"
+                                                },
+                                                "updated_at": {
+                                                    "type": "number",
+                                                    "example": "2023-06-10T22:27:14.000000"
+                                                },
+                                                "id": {
+                                                    "type": "number",
+                                                    "example": "2"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/headquarters": {
+            "get": {
+                "tags": [
+                    "Headquarters"
+                ],
+                "summary": "( Muestra todas las locaciones registradas )",
+                "operationId": "355dcf335f03ff08a14e4bef55fcc5bb",
+                "responses": {
+                    "200": {
+                        "description": "Datos recuperados exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Datos recuperados exitosamente"
+                                        },
+                                        "status": {
+                                            "type": "number",
+                                            "example": "200"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "anyOf": [
+                                                    {
+                                                        "$ref": "#/components/schemas/Headquarter1Schema"
+                                                    },
+                                                    {
+                                                        "$ref": "#/components/schemas/Headquarter2Schema"
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/headquarters/{id}": {
+            "get": {
+                "tags": [
+                    "Headquarters"
+                ],
+                "summary": "( Muestra datos de una sede identificada por {id})",
+                "operationId": "e92cb6218704b46dddb42756549a95de",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Datos recuperados exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Datos recuperados exitosamente"
+                                        },
+                                        "status": {
+                                            "type": "number",
+                                            "example": "200"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "number",
+                                                    "example": "2"
+                                                },
+                                                "name": {
+                                                    "type": "number",
+                                                    "example": "Caracas"
+                                                },
+                                                "state": {
+                                                    "type": "number",
+                                                    "example": "Distrito Capital"
+                                                },
+                                                "city": {
+                                                    "type": "number",
+                                                    "example": "Caracas"
+                                                },
+                                                "address": {
+                                                    "type": "number",
+                                                    "example": "Chacao"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Headquarters"
+                ],
+                "summary": "( Elimina los datos de una sede identificada por {id})",
+                "operationId": "ebc990a8fed78508845a135d3114a1e3",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Registro eliminado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Datos de sede borrados exitosamente"
+                                        },
+                                        "status": {
+                                            "type": "string",
+                                            "example": "200"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "string",
+                                                    "example": "1"
+                                                },
+                                                "name": {
+                                                    "type": "string",
+                                                    "example": "Planta"
+                                                },
+                                                "state": {
+                                                    "type": "string",
+                                                    "example": "Falcón"
+                                                },
+                                                "city": {
+                                                    "type": "string",
+                                                    "example": "Punto Fijo"
+                                                },
+                                                "address": {
+                                                    "type": "string",
+                                                    "example": "Zona Franca"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/headquarters/register": {
+            "post": {
+                "tags": [
+                    "Headquarters"
+                ],
+                "summary": "( Crea una nueva sede)",
+                "operationId": "8e097b4a247f683783617d6f558730d3",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "number",
+                                        "example": "Caracas"
+                                    },
+                                    "state": {
+                                        "type": "number",
+                                        "example": "Distrito Capital"
+                                    },
+                                    "city": {
+                                        "type": "number",
+                                        "example": "Caracas"
+                                    },
+                                    "address": {
+                                        "type": "number",
+                                        "example": "Chacao"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Sede Creada",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Registro creado exitosamente"
+                                        },
+                                        "status": {
+                                            "type": "integer",
+                                            "example": 201
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "string",
+                                                    "example": "1"
+                                                },
+                                                "name": {
+                                                    "type": "number",
+                                                    "example": "Caracas"
+                                                },
+                                                "state": {
+                                                    "type": "number",
+                                                    "example": "Distrito Capital"
+                                                },
+                                                "city": {
+                                                    "type": "number",
+                                                    "example": "Caracas"
+                                                },
+                                                "address": {
+                                                    "type": "number",
+                                                    "example": "Chacao"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/headquarters/update": {
+            "put": {
+                "tags": [
+                    "Headquarters"
+                ],
+                "summary": "( Actualiza los datos de una sede identificada por {id})",
+                "operationId": "2c1e367af0212d0616f9581e1a3816bf",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "number",
+                                        "example": "Caracas"
+                                    },
+                                    "state": {
+                                        "type": "number",
+                                        "example": "Distrito Capital"
+                                    },
+                                    "city": {
+                                        "type": "number",
+                                        "example": "Caracas"
+                                    },
+                                    "address": {
+                                        "type": "number",
+                                        "example": "Chacao"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Datos de sede actualizados",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Registro actualizado exitosamente"
+                                        },
+                                        "status": {
+                                            "type": "integer",
+                                            "example": 200
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "string",
+                                                    "example": "1"
+                                                },
+                                                "name": {
+                                                    "type": "number",
+                                                    "example": "Caracas"
+                                                },
+                                                "state": {
+                                                    "type": "number",
+                                                    "example": "Distrito Capital"
+                                                },
+                                                "city": {
+                                                    "type": "number",
+                                                    "example": "Caracas"
+                                                },
+                                                "address": {
+                                                    "type": "number",
+                                                    "example": "Chacao"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/locations": {
+            "get": {
+                "tags": [
+                    "Locations"
+                ],
+                "summary": "( Muestra todas las locaciones registradas )",
+                "operationId": "c22aa1cae7ab2b2ad315141d06fec369",
+                "responses": {
+                    "200": {
+                        "description": "Datos recuperados exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Datos recuperados exitosamente"
+                                        },
+                                        "status": {
+                                            "type": "number",
+                                            "example": "200"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "anyOf": [
+                                                    {
+                                                        "$ref": "#/components/schemas/Location1Schema"
+                                                    },
+                                                    {
+                                                        "$ref": "#/components/schemas/Location2Schema"
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/locations/{id}": {
+            "get": {
+                "tags": [
+                    "Locations"
+                ],
+                "summary": "( Muestra una locación identificada por {id})",
+                "operationId": "bcaac2b6f85e83cdc99139be535c66e6",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Datos recuperados exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Datos recuperados exitosamente"
+                                        },
+                                        "status": {
+                                            "type": "number",
+                                            "example": "200"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "number",
+                                                    "example": "2"
+                                                },
+                                                "name": {
+                                                    "type": "string",
+                                                    "example": "Soporte Técnico"
+                                                },
+                                                "observation": {
+                                                    "type": "number",
+                                                    "example": "sin observaciones"
+                                                },
+                                                "headquarter": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "number",
+                                                            "example": "2"
+                                                        },
+                                                        "name": {
+                                                            "type": "number",
+                                                            "example": "Caracas"
+                                                        },
+                                                        "state": {
+                                                            "type": "number",
+                                                            "example": "Distrito Capital"
+                                                        },
+                                                        "city": {
+                                                            "type": "number",
+                                                            "example": "Caracas"
+                                                        },
+                                                        "address": {
+                                                            "type": "number",
+                                                            "example": "Chacao"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Locations"
+                ],
+                "summary": "( Actualizar datos de una locación identificada por {id})",
+                "operationId": "3ac5d4120b6fb23f55f179649493a2d8",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Servidores"
+                                    },
+                                    "observation": {
+                                        "type": "string",
+                                        "example": "sin comentarios"
+                                    },
+                                    "headquarter_id": {
+                                        "type": "number",
+                                        "example": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Location Creada",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Registro creado"
+                                        },
+                                        "status": {
+                                            "type": "integer",
+                                            "example": 201
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "string",
+                                                    "example": "1"
+                                                },
+                                                "name": {
+                                                    "type": "string",
+                                                    "example": "Servidores"
+                                                },
+                                                "observation": {
+                                                    "type": "string",
+                                                    "example": "sin comentarios"
+                                                },
+                                                "headquarter": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "string",
+                                                            "example": "1"
+                                                        },
+                                                        "name": {
+                                                            "type": "string",
+                                                            "example": "Planta"
+                                                        },
+                                                        "state": {
+                                                            "type": "string",
+                                                            "example": "Falcón"
+                                                        },
+                                                        "city": {
+                                                            "type": "string",
+                                                            "example": "Punto Fijo"
+                                                        },
+                                                        "address": {
+                                                            "type": "string",
+                                                            "example": "Zona Franca"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Locations"
+                ],
+                "summary": "( Elimina los datos de una locación identificada por {id})",
+                "operationId": "721591ee086203214e6eb54f25625656",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Registro eliminado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Datos de locación borrados exitosamente"
+                                        },
+                                        "status": {
+                                            "type": "string",
+                                            "example": "200"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "number",
+                                                    "example": "1"
+                                                },
+                                                "name": {
+                                                    "type": "string",
+                                                    "example": "Servidores 1"
+                                                },
+                                                "observation": {
+                                                    "type": "string",
+                                                    "example": "sin observaciones"
+                                                },
+                                                "headquarter": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "string",
+                                                            "example": "1"
+                                                        },
+                                                        "name": {
+                                                            "type": "string",
+                                                            "example": "Planta"
+                                                        },
+                                                        "state": {
+                                                            "type": "string",
+                                                            "example": "Falcón"
+                                                        },
+                                                        "city": {
+                                                            "type": "string",
+                                                            "example": "Punto Fijo"
+                                                        },
+                                                        "address": {
+                                                            "type": "string",
+                                                            "example": "Zona Franca"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/locations/register": {
+            "post": {
+                "tags": [
+                    "Locations"
+                ],
+                "summary": "( Crea una nueva locación)",
+                "operationId": "1224feafe82faf39983c930fcdb82718",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Servidores"
+                                    },
+                                    "observation": {
+                                        "type": "string",
+                                        "example": "sin comentarios"
+                                    },
+                                    "headquarter_id": {
+                                        "type": "number",
+                                        "example": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Location Creada",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Registro creado"
+                                        },
+                                        "status": {
+                                            "type": "integer",
+                                            "example": 201
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "string",
+                                                    "example": "1"
+                                                },
+                                                "name": {
+                                                    "type": "string",
+                                                    "example": "Servidores"
+                                                },
+                                                "observation": {
+                                                    "type": "string",
+                                                    "example": "sin comentarios"
+                                                },
+                                                "headquarter": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "string",
+                                                            "example": "1"
+                                                        },
+                                                        "name": {
+                                                            "type": "string",
+                                                            "example": "Planta"
+                                                        },
+                                                        "state": {
+                                                            "type": "string",
+                                                            "example": "Falcón"
+                                                        },
+                                                        "city": {
+                                                            "type": "string",
+                                                            "example": "Punto Fijo"
+                                                        },
+                                                        "address": {
+                                                            "type": "string",
+                                                            "example": "Zona Franca"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/locHead/{id}": {
+            "get": {
+                "tags": [
+                    "Locations"
+                ],
+                "summary": "( Recupera las locaciones de una sede identificada por {id})",
+                "operationId": "09ff2e9306412c2fe87839028d844f72",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Locaciones de sede recuperadas",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Locaciones recuperados exitosamente"
+                                        },
+                                        "status": {
+                                            "type": "number",
+                                            "example": "200"
+                                        },
+                                        "locations": {
+                                            "type": "array",
+                                            "items": {
+                                                "anyOf": [
+                                                    {
+                                                        "$ref": "#/components/schemas/Location3Schema"
+                                                    },
+                                                    {
+                                                        "$ref": "#/components/schemas/Location4Schema"
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/auth/roles": {
+            "get": {
+                "tags": [
+                    "Auth_users"
+                ],
+                "summary": "( Muestra todos los roles registrados)",
+                "operationId": "1b04ebc6a5a34e070ce93cd0075969d8",
+                "responses": {
+                    "200": {
+                        "description": "Datos recuperados exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Datos recuperados exitosamente"
+                                        },
+                                        "status": {
+                                            "type": "number",
+                                            "example": "200"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "anyOf": [
+                                                    {
+                                                        "$ref": "#/components/schemas/Role1Schema"
+                                                    },
+                                                    {
+                                                        "$ref": "#/components/schemas/Role2Schema"
+                                                    },
+                                                    {
+                                                        "$ref": "#/components/schemas/Role3Schema"
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/status": {
+            "get": {
+                "tags": [
+                    "Statuses"
+                ],
+                "summary": "( Muestra todos los estados de dispositivos registrados)",
+                "operationId": "ba26089b59c876a5fa5c5c75513e0d49",
+                "responses": {
+                    "200": {
+                        "description": "Datos recuperados exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Datos recuperados exitosamente"
+                                        },
+                                        "status": {
+                                            "type": "number",
+                                            "example": "200"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "anyOf": [
+                                                    {
+                                                        "$ref": "#/components/schemas/Status1Schema"
+                                                    },
+                                                    {
+                                                        "$ref": "#/components/schemas/Status2Schema"
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/status/{id}": {
+            "get": {
+                "tags": [
+                    "Statuses"
+                ],
+                "summary": "( Muestra datos de un estado de dispositivo identificada por {id})",
+                "operationId": "8a6aa2edf816734b6daa1b25f3f529e3",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Datos recuperados exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Datos recuperados exitosamente"
+                                        },
+                                        "status": {
+                                            "type": "number",
+                                            "example": "200"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "number",
+                                                    "example": "1"
+                                                },
+                                                "name": {
+                                                    "type": "number",
+                                                    "example": "operativo"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Statuses"
+                ],
+                "summary": "( Elimina los datos de un estado identificado por {id})",
+                "operationId": "5c95658333774ec5e84cde0a11daa1c3",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Registro eliminado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Datos de estado de dispositivo borrados exitosamente"
+                                        },
+                                        "status": {
+                                            "type": "string",
+                                            "example": "200"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "string",
+                                                    "example": "3"
+                                                },
+                                                "name": {
+                                                    "type": "string",
+                                                    "example": "en mantenimiento"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/status/register": {
+            "post": {
+                "tags": [
+                    "Statuses"
+                ],
+                "summary": "( Crea un nuevo estado de un dispositivo)",
+                "operationId": "6a502db4fcf51d24c1e4e6b261dcc3dc",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "number",
+                                        "example": "en mantenimiento"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Estado de dispositivo creado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Registro creado exitosamente"
+                                        },
+                                        "status": {
+                                            "type": "integer",
+                                            "example": 201
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "string",
+                                                    "example": "3"
+                                                },
+                                                "name": {
+                                                    "type": "number",
+                                                    "example": "en mantenimiento"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/status/update": {
+            "put": {
+                "tags": [
+                    "Statuses"
+                ],
+                "summary": "( Actualiza los datos de un estado de dispositivo identificado por {id})",
+                "operationId": "5b013a4d1764239ea168682da4422a34",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "number",
+                                        "example": "en reparacion"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Datos de estado de dispositivo actualizados",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Registro actualizado exitosamente"
+                                        },
+                                        "status": {
+                                            "type": "integer",
+                                            "example": 200
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "string",
+                                                    "example": "3"
+                                                },
+                                                "name": {
+                                                    "type": "number",
+                                                    "example": "en reparación"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/types": {
+            "get": {
+                "tags": [
+                    "Types"
+                ],
+                "summary": "( Muestra todos los tipos de dispositivos registrados)",
+                "operationId": "5ae5a6ccb7da5e1410da3b56b6fde09f",
+                "responses": {
+                    "200": {
+                        "description": "Datos recuperados exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Datos recuperados exitosamente"
+                                        },
+                                        "status": {
+                                            "type": "number",
+                                            "example": "200"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "anyOf": [
+                                                    {
+                                                        "$ref": "#/components/schemas/Type1Schema"
+                                                    },
+                                                    {
+                                                        "$ref": "#/components/schemas/Type2Schema"
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/types/{id}": {
+            "get": {
+                "tags": [
+                    "Types"
+                ],
+                "summary": "( Muestra datos de un tipo de dispositivo identificado por {id})",
+                "operationId": "6bd0b47f25aa9325d8aa96c18ec401a3",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Datos recuperados exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Datos recuperados exitosamente"
+                                        },
+                                        "status": {
+                                            "type": "number",
+                                            "example": "200"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "number",
+                                                    "example": "3"
+                                                },
+                                                "name": {
+                                                    "type": "number",
+                                                    "example": "router"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Types"
+                ],
+                "summary": "( Actualiza los datos de un tipo de dispositivo identificado por {id})",
+                "operationId": "4f384bc0a685f6a6c172bce5ad7fb6dd",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "number",
+                                        "example": "router"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Datos de tipo de dispositivo actualizados",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Registro actualizado exitosamente"
+                                        },
+                                        "status": {
+                                            "type": "integer",
+                                            "example": 200
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "string",
+                                                    "example": "3"
+                                                },
+                                                "name": {
+                                                    "type": "number",
+                                                    "example": "router"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Types"
+                ],
+                "summary": "( Elimina los datos de un tipo (type) identificado por {id})",
+                "operationId": "103812d7190b22f2d47edcb4cf7322f3",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Registro eliminado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Datos de estado de dispositivo borrados exitosamente"
+                                        },
+                                        "status": {
+                                            "type": "string",
+                                            "example": "200"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "string",
+                                                    "example": "3"
+                                                },
+                                                "name": {
+                                                    "type": "string",
+                                                    "example": "switch"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/types/register": {
+            "post": {
+                "tags": [
+                    "Types"
+                ],
+                "summary": "( Crea un nuevo tipo de dispositivo)",
+                "operationId": "35117ba2ae9d7d0f763f67e4355e7b20",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "number",
+                                        "example": "switch"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Tipo de dispositivo creado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Registro creado exitosamente"
+                                        },
+                                        "status": {
+                                            "type": "integer",
+                                            "example": 201
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "string",
+                                                    "example": "3"
+                                                },
+                                                "name": {
+                                                    "type": "number",
+                                                    "example": "switch"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/api/user": {
             "get": {
                 "tags": [
@@ -869,6 +2884,467 @@
     },
     "components": {
         "schemas": {
+            "Device1Schema": {
+                "properties": {
+                    "id": {
+                        "type": "number",
+                        "example": "1"
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "Switch No.1"
+                    },
+                    "manufacturer": {
+                        "type": "string",
+                        "example": "cisco"
+                    },
+                    "model": {
+                        "type": "string",
+                        "example": "C3560g"
+                    },
+                    "serial": {
+                        "type": "string",
+                        "example": "SN1234567823ASD324"
+                    },
+                    "code": {
+                        "type": "string",
+                        "example": "VIT-SW001"
+                    },
+                    "observation": {
+                        "type": "string",
+                        "example": "adquirido en 2018"
+                    },
+                    "description": {
+                        "type": "string",
+                        "example": "Switch 48 puertos 10/100/1000 Poe"
+                    },
+                    "location": {
+                        "properties": {
+                            "id": {
+                                "type": "number",
+                                "example": "1"
+                            },
+                            "name": {
+                                "type": "string",
+                                "example": "Sala de Servidores"
+                            },
+                            "observation": {
+                                "type": "string",
+                                "example": "Próximo mantenimiento Agosto 2023"
+                            },
+                            "headquarter": {
+                                "properties": {
+                                    "id": {
+                                        "type": "number",
+                                        "example": "1"
+                                    },
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Sede Vit Paraguaná"
+                                    },
+                                    "state": {
+                                        "type": "string",
+                                        "example": "Falcón"
+                                    },
+                                    "city": {
+                                        "type": "string",
+                                        "example": "Punto Fijo"
+                                    },
+                                    "address": {
+                                        "type": "string",
+                                        "example": "Zona Franca"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "status": {
+                        "properties": {
+                            "id": {
+                                "type": "number",
+                                "example": "1"
+                            },
+                            "name": {
+                                "type": "string",
+                                "example": "activo"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "type": {
+                        "properties": {
+                            "id": {
+                                "type": "number",
+                                "example": "2"
+                            },
+                            "name": {
+                                "type": "string",
+                                "example": "switch"
+                            }
+                        },
+                        "type": "object"
+                    }
+                },
+                "type": "object"
+            },
+            "Device2Schema": {
+                "properties": {
+                    "id": {
+                        "type": "number",
+                        "example": "2"
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "Router "
+                    },
+                    "manufacturer": {
+                        "type": "string",
+                        "example": "tp-link"
+                    },
+                    "model": {
+                        "type": "string",
+                        "example": "AC64"
+                    },
+                    "serial": {
+                        "type": "string",
+                        "example": "SNR100000234567823ASD324"
+                    },
+                    "code": {
+                        "type": "string",
+                        "example": "VIT-RT031"
+                    },
+                    "observation": {
+                        "type": "string",
+                        "example": "adquirido en 2018"
+                    },
+                    "description": {
+                        "type": "string",
+                        "example": "Router dual band 2.4GHz & 5Ghz"
+                    },
+                    "location": {
+                        "properties": {
+                            "id": {
+                                "type": "number",
+                                "example": "2"
+                            },
+                            "name": {
+                                "type": "string",
+                                "example": "Switch No.1"
+                            },
+                            "observation": {
+                                "type": "string",
+                                "example": "Switch No.1"
+                            },
+                            "headquarter": {
+                                "properties": {
+                                    "id": {
+                                        "type": "number",
+                                        "example": "2"
+                                    },
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Switch No.1"
+                                    },
+                                    "state": {
+                                        "type": "string",
+                                        "example": "Switch No.1"
+                                    },
+                                    "city": {
+                                        "type": "string",
+                                        "example": "Switch No.1"
+                                    },
+                                    "address": {
+                                        "type": "string",
+                                        "example": "Switch No.1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "status": {
+                        "properties": {
+                            "id": {
+                                "type": "number",
+                                "example": "2"
+                            },
+                            "name": {
+                                "type": "string",
+                                "example": "Switch No.1"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "type": {
+                        "properties": {
+                            "id": {
+                                "type": "number",
+                                "example": "3"
+                            },
+                            "name": {
+                                "type": "string",
+                                "example": "router"
+                            }
+                        },
+                        "type": "object"
+                    }
+                },
+                "type": "object"
+            },
+            "Headquarter1Schema": {
+                "properties": {
+                    "id": {
+                        "type": "number",
+                        "example": "1"
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "Planta"
+                    },
+                    "state": {
+                        "type": "number",
+                        "example": "Falcón"
+                    },
+                    "city": {
+                        "type": "number",
+                        "example": "Punto Fijo"
+                    },
+                    "address": {
+                        "type": "number",
+                        "example": "Zona Frana"
+                    }
+                },
+                "type": "object"
+            },
+            "Headquarter2Schema": {
+                "properties": {
+                    "id": {
+                        "type": "number",
+                        "example": "2"
+                    },
+                    "name": {
+                        "type": "number",
+                        "example": "Caracas"
+                    },
+                    "state": {
+                        "type": "number",
+                        "example": "Distrito Capital"
+                    },
+                    "city": {
+                        "type": "number",
+                        "example": "Caracas"
+                    },
+                    "address": {
+                        "type": "number",
+                        "example": "Chacao"
+                    }
+                },
+                "type": "object"
+            },
+            "Location1Schema": {
+                "properties": {
+                    "id": {
+                        "type": "number",
+                        "example": "1"
+                    },
+                    "name": {
+                        "type": "number",
+                        "example": "Servidores 1"
+                    },
+                    "observation": {
+                        "type": "number",
+                        "example": "sin observaciones"
+                    },
+                    "headquarter": {
+                        "properties": {
+                            "id": {
+                                "type": "number",
+                                "example": "1"
+                            },
+                            "name": {
+                                "type": "string",
+                                "example": "Planta"
+                            },
+                            "state": {
+                                "type": "number",
+                                "example": "Falcón"
+                            },
+                            "city": {
+                                "type": "number",
+                                "example": "Punto Fijo"
+                            },
+                            "address": {
+                                "type": "number",
+                                "example": "Zona Frana"
+                            }
+                        },
+                        "type": "object"
+                    }
+                },
+                "type": "object"
+            },
+            "Location2Schema": {
+                "properties": {
+                    "id": {
+                        "type": "number",
+                        "example": "2"
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "Soporte Técnico"
+                    },
+                    "observation": {
+                        "type": "number",
+                        "example": "sin observaciones"
+                    },
+                    "headquarter": {
+                        "properties": {
+                            "id": {
+                                "type": "number",
+                                "example": "2"
+                            },
+                            "name": {
+                                "type": "number",
+                                "example": "Caracas"
+                            },
+                            "state": {
+                                "type": "number",
+                                "example": "Distrito Capital"
+                            },
+                            "city": {
+                                "type": "number",
+                                "example": "Caracas"
+                            },
+                            "address": {
+                                "type": "number",
+                                "example": "Chacao"
+                            }
+                        },
+                        "type": "object"
+                    }
+                },
+                "type": "object"
+            },
+            "Location3Schema": {
+                "properties": {
+                    "id": {
+                        "type": "number",
+                        "example": "1"
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "Servidores"
+                    }
+                },
+                "type": "object"
+            },
+            "Location4Schema": {
+                "properties": {
+                    "id": {
+                        "type": "number",
+                        "example": "2"
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "Soporte Técnico"
+                    }
+                },
+                "type": "object"
+            },
+            "Role1Schema": {
+                "properties": {
+                    "id": {
+                        "type": "number",
+                        "example": "1"
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "Admin"
+                    }
+                },
+                "type": "object"
+            },
+            "Role2Schema": {
+                "properties": {
+                    "id": {
+                        "type": "number",
+                        "example": "2"
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "Supervisor"
+                    }
+                },
+                "type": "object"
+            },
+            "Role3Schema": {
+                "properties": {
+                    "id": {
+                        "type": "number",
+                        "example": "3"
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "Usuario"
+                    }
+                },
+                "type": "object"
+            },
+            "Status1Schema": {
+                "properties": {
+                    "id": {
+                        "type": "number",
+                        "example": "1"
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "operativo"
+                    }
+                },
+                "type": "object"
+            },
+            "Status2Schema": {
+                "properties": {
+                    "id": {
+                        "type": "number",
+                        "example": "2"
+                    },
+                    "name": {
+                        "type": "number",
+                        "example": "no operativo"
+                    }
+                },
+                "type": "object"
+            },
+            "Type1Schema": {
+                "properties": {
+                    "id": {
+                        "type": "number",
+                        "example": "1"
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "servidor blade"
+                    }
+                },
+                "type": "object"
+            },
+            "Type2Schema": {
+                "properties": {
+                    "id": {
+                        "type": "number",
+                        "example": "2"
+                    },
+                    "name": {
+                        "type": "number",
+                        "example": "switch"
+                    }
+                },
+                "type": "object"
+            },
             "User1Schema": {
                 "properties": {
                     "id": {
