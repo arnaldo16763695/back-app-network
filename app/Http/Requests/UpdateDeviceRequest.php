@@ -2,12 +2,11 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-
-class RegisterDeviceRequest extends FormRequest
+class UpdateDeviceRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,25 +24,24 @@ class RegisterDeviceRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'=>'required|min:3|max:50|unique:devices,name',
+            'name'=>'required|min:3|max:50|unique:devices,name,'.$this->id,
             'manufacturer'=>'required|min:5|max:50',
             'model'=>'required|min:3|max:50',
-            'serial'=>'required|min:3|max:70|unique:devices,serial',
+            'serial'=>'required|min:3|max:70|unique:devices,serial,'.$this->id,
             'code'=>'required|min:3|max:50',
-            'observation'=>'required|min:3|max:500',
-            'description'=>'required|min:3|max:255',
+            'observation'=>'required|max:500',
+            'description'=>'required|max:255',
             'status_id'=>'required|integer|exists:statuses,id',
             'type_id'=>'required|integer|exists:types,id',
             'location_id'=>'required|integer|exists:locations,id',
         ];
     }
 
-    public function filedValidation(Validator $validator){
-        throw new HttpResponseException(response()->json([
-            'success'=> false,
-            'message'=> 'Errores de Validacion',
-            'data'      => $validator->errors()
-        ]));
-
+    public function failedValidation(Validator $validator){
+       throw new HttpResponseException(response()->json([
+        'success'=> false,
+        'message'=> 'Errores de Validacion',
+        'data'      => $validator->errors()
+    ]));
     }
 }

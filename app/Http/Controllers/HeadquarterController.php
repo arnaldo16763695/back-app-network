@@ -3,52 +3,177 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\RegisterHeadquarterRequest;
+use App\Http\Requests\UpdateHeadquarterRequest;
 use App\Models\Headquarter;
 
 class HeadquarterController extends Controller
 {
+    /**
+    *   ( Muestra todas las locaciones registradas )
+    *
+    *   @OA\Schema(
+    *       schema="Headquarter1Schema",
+    *       @OA\Property(property="id", type="number", example="1"),
+    *       @OA\Property(property="name", type="string", example="Planta"),
+    *       @OA\Property(property="state", type="number", example="Falcón"),
+    *       @OA\Property(property="city", type="number", example="Punto Fijo"),
+    *       @OA\Property(property="address", type="number", example="Zona Frana")
+    *   )
+    *
+    *   @OA\Schema(
+    *       schema="Headquarter2Schema",
+    *       @OA\Property(property="id", type="number", example="2"),
+    *       @OA\Property(property="name", type="number", example="Caracas"),
+    *       @OA\Property(property="state", type="number", example="Distrito Capital"),
+    *       @OA\Property(property="city", type="number", example="Caracas"),
+    *       @OA\Property(property="address", type="number", example="Chacao")
+    *   )
+    *
+    *   @OA\Get (
+    *       path="/api/headquarters",
+    *       tags={"Headquarters"},
+    *       security={{"bearerAuth":{}}},
+    *       @OA\Response(
+    *           response=200,
+    *           description="Datos recuperados exitosamente",
+    *           @OA\JsonContent(
+    *               @OA\Property(property="message", type="string", example="Datos recuperados exitosamente"),
+    *               @OA\Property(property="status", type="number", example="200"),
+    *               @OA\Property(
+    *                   type="array",
+    *                   property="data",
+    *                   @OA\Items(
+    *                       anyOf={
+    *                           @OA\Schema(ref="#/components/schemas/Headquarter1Schema"),
+    *                           @OA\Schema(ref="#/components/schemas/Headquarter2Schema"),
+    *                       }
+    *                   )
+    *               )
+    *           )
+    *       )
+    *   )
+    */
     public function index()
     {
         $headquarters = Headquarter::all();
         if ($headquarters->isEmpty()) {
             $response = [
-                'message' => 'No hay datos disponibles'
+                'message' => 'No hay datos disponibles',
+                "status"=>"200"
             ];
         } else {
+            foreach($headquarters as $headquarter){
+                $data[] = [
+                    "id"=>$headquarter->id,
+                    "name"=>$headquarter->name,
+                    "state"=>$headquarter->state,
+                    "city"=>$headquarter->city,
+                    "address"=>$headquarter->address,
+                ];
+            }
             $response = [
                 'message' => 'Datos recuperados exitosamente',
-                'data' => $headquarters
+                "status"=>"200",
+                'data' => $data
             ];
         }
 
         return response()->json($response);
     }
 
-    //Mostrar una unica sede
-
+    /**
+    *   ( Muestra datos de una sede identificada por {id})
+    *   @OA\Get (
+    *       path="/api/headquarters/{id}",
+    *       tags={"Headquarters"},
+    *       security={{"bearerAuth":{}}},
+    *       @OA\Parameter(
+    *           in="path",
+    *           name="id",
+    *           required=true,
+    *           @OA\Schema(type="number")
+    *       ),
+    *       @OA\Response(
+    *           response=200,
+    *           description="Datos recuperados exitosamente",
+    *           @OA\JsonContent(
+    *               @OA\Property(property="message", type="string", example="Datos recuperados exitosamente"),
+    *               @OA\Property(property="status", type="number", example="200"),
+    *               @OA\Property(
+    *                   type="object",
+    *                   property="data",
+    *                   @OA\Property(property="id", type="number", example="2"),
+    *                   @OA\Property(property="name", type="number", example="Caracas"),
+    *                   @OA\Property(property="state", type="number", example="Distrito Capital"),
+    *                   @OA\Property(property="city", type="number", example="Caracas"),
+    *                   @OA\Property(property="address", type="number", example="Chacao")
+    *               )
+    *           )
+    *       )
+    *   )
+    */
     public function show($id)
     {
         $headquarter = Headquarter::find($id);
-
         if ($headquarter === null) {
-
             $response = [
-
-                'message' => 'no hay datos disponibles'
+                'message' => 'no hay datos disponibles',
+                "status"=>"200"
             ];
         } else {
-
+            $data= [
+                "id"=>$headquarter->id,
+                "name"=>$headquarter->name,
+                "state"=>$headquarter->state,
+                "city"=>$headquarter->city,
+                "address"=>$headquarter->address,
+            ];
             $response = [
-
                 'message' => 'Datos recuperados exitosamente',
-                'data' => $headquarter
+                "status"=>"200",
+                'data' => $data
             ];
         }
         return response()->json($response);
     }
 
-    //registrar un equipo
 
+    /**
+    *   ( Crea una nueva sede)
+    *   @OA\Post (
+    *       path="/api/headquarters/register",
+    *       tags={"Headquarters"},
+    *       security={{"bearerAuth":{}}},
+    *       @OA\RequestBody(
+    *           @OA\MediaType(
+    *               mediaType="application/json",
+    *               @OA\Schema(
+    *                   @OA\Property(property="name", type="number", example="Caracas"),
+    *                   @OA\Property(property="state", type="number", example="Distrito Capital"),
+    *                   @OA\Property(property="city", type="number", example="Caracas"),
+    *                   @OA\Property(property="address", type="number", example="Chacao")
+    *               )
+    *           )
+    *       ),
+    *       @OA\Response(
+    *           response=201,
+    *           description="Sede Creada",
+    *           @OA\JsonContent(
+    *               @OA\Property(property="message", type="string", example="Registro creado exitosamente"),
+    *               @OA\Property(property="status", type="integer", example=201),
+    *               @OA\Property(
+    *                   property="data",
+    *                   type="object",
+    *                   @OA\Property(property="id", type="string", example="1"),
+    *                   @OA\Property(property="name", type="number", example="Caracas"),
+    *                   @OA\Property(property="state", type="number", example="Distrito Capital"),
+    *                   @OA\Property(property="city", type="number", example="Caracas"),
+    *                   @OA\Property(property="address", type="number", example="Chacao")
+    *               )
+    *           )
+    *       )
+    *   )
+    */
     public function register(RegisterHeadquarterRequest $request)
     {
         $headquarter=new Headquarter();
@@ -57,17 +182,64 @@ class HeadquarterController extends Controller
         $headquarter->city=$request->city;
         $headquarter->address=$request->address;
         $headquarter->save();
-
+        $data = [
+            "id"=>$headquarter->id,
+            "name"=>$headquarter->name,
+            "state"=>$headquarter->state,
+            "city"=>$headquarter->city,
+            "address"=>$headquarter->address,
+        ];
         $response=[
             'message'=>'Registro creado exitosamente',
             'status'=>201,
-            'data'=> $headquarter
+            'data'=> $data
         ];
-
         return response()->json($response,201);
     }
 
-    public function Update(RegisterHeadquarterRequest $request, $id)
+    /**
+    *   ( Actualiza los datos de una sede identificada por {id})
+    *   @OA\Put(
+    *       path="/api/headquarters/update",
+    *       tags={"Headquarters"},
+    *       security={{"bearerAuth":{}}},
+    *       @OA\Parameter(
+    *           in="path",
+    *           name="id",
+    *           required=true,
+    *           @OA\Schema(type="number")
+    *       ),
+    *       @OA\RequestBody(
+    *           @OA\MediaType(
+    *               mediaType="application/json",
+    *               @OA\Schema(
+    *                   @OA\Property(property="name", type="number", example="Caracas"),
+    *                   @OA\Property(property="state", type="number", example="Distrito Capital"),
+    *                   @OA\Property(property="city", type="number", example="Caracas"),
+    *                   @OA\Property(property="address", type="number", example="Chacao")
+    *               )
+    *           )
+    *       ),
+    *       @OA\Response(
+    *           response=201,
+    *           description="Datos de sede actualizados",
+    *           @OA\JsonContent(
+    *               @OA\Property(property="message", type="string", example="Registro actualizado exitosamente"),
+    *               @OA\Property(property="status", type="integer", example=200),
+    *               @OA\Property(
+    *                   property="data",
+    *                   type="object",
+    *                   @OA\Property(property="id", type="string", example="1"),
+    *                   @OA\Property(property="name", type="number", example="Caracas"),
+    *                   @OA\Property(property="state", type="number", example="Distrito Capital"),
+    *                   @OA\Property(property="city", type="number", example="Caracas"),
+    *                   @OA\Property(property="address", type="number", example="Chacao")
+    *               )
+    *           )
+    *       )
+    *   )
+    */
+    public function Update(UpdateHeadquarterRequest $request, $id)
     {
         $headquarter = Headquarter::find($id);
         if (!$headquarter){
@@ -84,17 +256,53 @@ class HeadquarterController extends Controller
             $headquarter->address= $request->address;
             $headquarter->save();
 
+            $data = [
+                "id"=>$headquarter->id,
+                "name"=>$headquarter->name,
+                "state"=>$headquarter->state,
+                "city"=>$headquarter->city,
+                "address"=>$headquarter->address,
+            ];
             $response = [
                 "message"=>"Registro actualizado exitosamente",
-                "status"=> 201,
-                "data"=> $headquarter
+                "status"=> 200,
+                "data"=> $data
             ];
         }
         return response()->json($response);
     }
 
-    //eliminar un equipo
-
+    /**
+    *   ( Elimina los datos de una sede identificada por {id})
+    *   @OA\Delete(
+    *       path="/api/headquarters/{id}",
+    *       tags={"Headquarters"},
+    *       security={{"bearerAuth":{}}},
+    *       @OA\Parameter(
+    *           in="path",
+    *           name="id",
+    *           required=true,
+    *           @OA\Schema(type="number")
+    *       ),
+    *       @OA\Response(
+    *           response=200,
+    *           description="Registro eliminado",
+    *           @OA\JsonContent(
+    *               @OA\Property(property="message", type="string", example="Datos de sede borrados exitosamente"),
+    *               @OA\Property(property="status", type="string", example="200"),
+    *               @OA\Property(
+    *                   property="data",
+    *                   type="object",
+    *                   @OA\Property(property="id", type="string", example="1"),
+    *                   @OA\Property(property="name", type="string", example="Planta"),
+    *                   @OA\Property(property="state", type="string", example="Falcón"),
+    *                   @OA\Property(property="city", type="string", example="Punto Fijo"),
+    *                   @OA\Property(property="address", type="string", example="Zona Franca"),
+    *               )
+    *           )
+    *       )
+    *   )
+    */
     public function destroy(string $id)
     {
         $headquarter = Headquarter::find($id);
@@ -111,10 +319,17 @@ class HeadquarterController extends Controller
                     "data"=>$locations
                 ];
             }else{
+                $data = [
+                    "id"=>$headquarter->id,
+                    "name"=>$headquarter->name,
+                    "state"=>$headquarter->state,
+                    "city"=>$headquarter->city,
+                    "address"=>$headquarter->address,
+                ];
                 $headquarter->delete();
                 $response= [
                     "message"=>"El registro se elimino correctamente",
-                    "data"=>$headquarter
+                    "data"=>$data
                 ];
             }
         }
