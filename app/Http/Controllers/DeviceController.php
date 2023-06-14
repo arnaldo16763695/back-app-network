@@ -316,10 +316,10 @@ class DeviceController extends Controller
     public function register(RegisterDeviceRequest $request)
     {
         $device = new Device();
-        $device->name = $request->name;
+        $device->name = clean_extra_spaces($request->name);
         $device->manufacturer = $request->manufacturer;
         $device->model = $request->model;
-        $device->serial = $request->serial;
+        $device->serial = ($request->serial);
         $device->code = $request->code;
         $device->observation = $request->observation;
         $device->description = $request->description;

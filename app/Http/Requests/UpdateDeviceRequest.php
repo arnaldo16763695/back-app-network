@@ -24,7 +24,7 @@ class UpdateDeviceRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'=>'required|min:3|max:50|unique:devices,name,'.$this->id,
+            'name'=>'required|min:3|max:50',
             'manufacturer'=>'required|min:5|max:50',
             'model'=>'required|min:3|max:50',
             'serial'=>'required|min:3|max:70|unique:devices,serial,'.$this->id,
