@@ -230,8 +230,37 @@ class LocationController extends Controller
     */
     public function register(RegisterLocationRequest $request)
     {
+        $locations = Location::where('headquarter_id',$request->headquarter_id)->get();
+        // la funcion clean_extra_spaces() esta definida en app/Helpers/helpers.php
+        // elimina espacios duplicados en una cadena
+        // de caracteres.
+        $request_name = clean_extra_spaces($request->name);
+        foreach($locations as $location){
+            $location_name =clean_extra_spaces($location->name);
+            if (strtoupper($request_name)===strtoupper($location_name)){
+                $response = [
+                    "message"=>"Lo sentimos, ya existe una locación registrada  con el nombre '"
+                        .$request->name."' para la sede '".
+                        $location->headquarter->name."'",
+                    "status"=>200,
+                    "data"=> [
+                        "id"=>$location->id,
+                        "name"=>$location->name,
+                        "observation"=>$location->observation,
+                        "headquarter"=>[
+                            "id"=>$location->headquarter->id,
+                            "name"=>$location->headquarter->name,
+                            "state"=>$location->headquarter->state,
+                            "city"=>$location->headquarter->city,
+                            "address"=>$location->headquarter->address,
+                        ]
+                    ]
+                ];
+                return response()->json($response,200);
+            }
+        }
         $location=new Location();
-        $location->name=$request->name;
+        $location->name=clean_extra_spaces($request->name);
         $location->observation=$request->observation;
         $location->headquarter_id=$request->headquarter_id;
         $location->save();
@@ -307,13 +336,45 @@ class LocationController extends Controller
     */
     public function update(UpdateLocationRequest $request, $id)
     {
+
+        $locations = Location::where('headquarter_id',$request->headquarter_id)
+            ->whereNotIn('id',[$id])
+            ->get();
+        // la funcion clean_extra_spaces() esta definida en app/Helpers/helpers.php
+        // elimina espacios duplicados en una cadena
+        // de caracteres.
+        $request_name = clean_extra_spaces($request->name);
+        foreach($locations as $location){
+            $location_name =clean_extra_spaces($location->name);
+            if (strtoupper($request_name)===strtoupper($location_name)){
+                $response = [
+                    "message"=>"Lo sentimos, ya existe una locación registrada  con el nombre '"
+                        .$request->name."' para la sede '".
+                        $location->headquarter->name."'",
+                    "status"=>200,
+                    "data"=> [
+                        "id"=>$location->id,
+                        "name"=>$location->name,
+                        "observation"=>$location->observation,
+                        "headquarter"=>[
+                            "id"=>$location->headquarter->id,
+                            "name"=>$location->headquarter->name,
+                            "state"=>$location->headquarter->state,
+                            "city"=>$location->headquarter->city,
+                            "address"=>$location->headquarter->address,
+                        ]
+                    ]
+                ];
+                return response()->json($response,200);
+            }
+        }
         $location = Location::find($id);
         if(!$location){
             $response=[
                 "message"=>"La locación no existe"
             ];
         }else{
-            $location->name=$request->name;
+            $location->name=clean_extra_spaces($request->name);
             $location->observation=$request->observation;
             $location->headquarter_id=$request->headquarter_id;
             $location->save();

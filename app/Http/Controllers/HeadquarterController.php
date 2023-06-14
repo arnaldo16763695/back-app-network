@@ -176,8 +176,31 @@ class HeadquarterController extends Controller
     */
     public function register(RegisterHeadquarterRequest $request)
     {
+        // la funcion clean_extra_spaces() esta definida en app/Helpers/helpers.php
+        // elimina espacios duplicados en una cadena
+        // de caracteres.
+        $request_name = clean_extra_spaces($request->name);
+        $headquarters = Headquarter::all();
+        foreach($headquarters as $headquarter){
+            $headquarter_name =clean_extra_spaces($headquarter->name);
+            if (strtoupper($headquarter_name)===strtoupper($request_name)){
+                $response = [
+                    "message"=>"Lo sentimos, ya existe una sede registrada con el nombre '"
+                        .$request->name."'",
+                    "status"=>200,
+                    "data"=> [
+                        "id"=>$headquarter->id,
+                        "name"=>$headquarter->name,
+                        "state"=>$headquarter->state,
+                        "city"=>$headquarter->city,
+                        "address"=>$headquarter->address,
+                    ]
+                ];
+                return response()->json($response,200);
+            }
+        }
         $headquarter=new Headquarter();
-        $headquarter->name=$request->name;
+        $headquarter->name=clean_extra_spaces($request->name);
         $headquarter->state=$request->state;
         $headquarter->city=$request->city;
         $headquarter->address=$request->address;
@@ -241,6 +264,31 @@ class HeadquarterController extends Controller
     */
     public function Update(UpdateHeadquarterRequest $request, $id)
     {
+        $headquarters = Headquarter::select('*')
+            ->whereNotIn('id',[$id])
+            ->get();
+        // la funcion clean_extra_spaces() esta definida en app/Helpers/helpers.php
+        // elimina espacios duplicados en una cadena
+        // de caracteres.
+        $request_name = clean_extra_spaces($request->name);
+        foreach($headquarters as $headquarter){
+            $headquarter_name =clean_extra_spaces($headquarter->name);
+            if (strtoupper($request_name)===strtoupper($headquarter_name)){
+                $response = [
+                    "message"=>"Lo sentimos, ya existe una sede registrada  con el nombre '".$request->name."'",
+                    "status"=>200,
+                    "data"=> [
+                        "id"=>$headquarter->id,
+                        "name"=>$headquarter->name,
+                        "state"=>$headquarter->state,
+                        "city"=>$headquarter->city,
+                        "address"=>$headquarter->address,
+                    ]
+                ];
+                return response()->json($response,200);
+            }
+        }
+
         $headquarter = Headquarter::find($id);
         if (!$headquarter){
             $response= [
@@ -250,7 +298,7 @@ class HeadquarterController extends Controller
 
 
         }else{
-            $headquarter->name= $request->name;
+            $headquarter->name= clean_extra_spaces($request->name);
             $headquarter->state= $request->state;
             $headquarter->city= $request->city;
             $headquarter->address= $request->address;
