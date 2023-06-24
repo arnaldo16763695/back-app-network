@@ -38,7 +38,7 @@ class RegisterDeviceRequest extends FormRequest
         ];
     }
 
-    public function filedValidation(Validator $validator){
+    public function failedValidation(Validator $validator){
         throw new HttpResponseException(response()->json([
             'success'=> false,
             'message'=> 'Errores de Validacion',
