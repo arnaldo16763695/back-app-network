@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class UpdateHeadquarterRequest extends FormRequest
 {
@@ -28,4 +30,12 @@ class UpdateHeadquarterRequest extends FormRequest
             'address'=>'required|min:5|max:500'
         ];
     }
+
+    public function failedValidation(Validator $validator){
+        throw new HttpResponseException(response()->json([
+         'success'=> false,
+         'message'=> 'Errores de Validacion',
+         'data'      => $validator->errors()
+     ]));
+     }
 }

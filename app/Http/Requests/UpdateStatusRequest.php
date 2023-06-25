@@ -27,7 +27,7 @@ class UpdateStatusRequest extends FormRequest
             'name'=>'required|min:1|max:50|unique:statuses,name,'.$this->id,
         ];
     }
-    public function filedValidation(Validator $validator){
+    public function failedValidation(Validator $validator){
         throw new HttpResponseException(response()->json([
             'success'=> false,
             'message'=> 'Errores de Validacion',

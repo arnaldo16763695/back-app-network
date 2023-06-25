@@ -27,7 +27,7 @@ class RegisterTypeRequest extends FormRequest
             'name'=>'required|min:3|max:50|unique:types,name',
         ];
     }
-        public function filedValidation(Validator $validator){
+        public function failedValidation(Validator $validator){
         throw new HttpResponseException(response()->json([
             'success'=> false,
             'message'=> 'Errores de Validacion',
