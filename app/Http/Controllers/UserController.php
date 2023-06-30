@@ -280,7 +280,7 @@ class UserController extends Controller
             return response()->json($response, 403);
         }
 
-        if ($role->name === 'Supervisor' || $role->name ==='Admin'){
+        if ((Auth::user()->hasRole('Supervisor')&&($role->name === 'Supervisor' || $role->name ==='Admin')){
             $response = [
                 "success"=>false,
                 "message"=>"Errores de Validacion",
