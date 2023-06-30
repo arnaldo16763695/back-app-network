@@ -27,6 +27,14 @@ class UpdateStatusRequest extends FormRequest
             'name'=>'required|min:1|max:50|unique:statuses,name,'.$this->id,
         ];
     }
+
+    protected function prepareForValidation(): void
+    {
+        $this->merge([
+            'name'=>clean_extra_spaces(trim($this->input('name')))
+        ]);
+    }
+
     public function failedValidation(Validator $validator){
         throw new HttpResponseException(response()->json([
             'success'=> false,

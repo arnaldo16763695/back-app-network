@@ -21,18 +21,26 @@ class RegisterTypeRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array|string>
      */
+
     public function rules(): array
     {
         return [
             'name'=>'required|min:3|max:50|unique:types,name',
         ];
     }
-        public function failedValidation(Validator $validator){
+
+    protected function prepareForValidation(): void
+    {
+        $this->merge([
+            'name'=>clean_extra_spaces(trim($this->input('name')))
+        ]);
+    }
+
+    public function failedValidation(Validator $validator){
         throw new HttpResponseException(response()->json([
             'success'=> false,
             'message'=> 'Errores de Validacion',
             'data'      => $validator->errors()
         ]));
-
     }
 }
