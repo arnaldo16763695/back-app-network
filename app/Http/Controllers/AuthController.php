@@ -97,6 +97,24 @@ class AuthController extends Controller
             ];
             return response()->json($response,200);
         }
+
+
+        //  Se verifica que un Supervisor no pueda crear usuarios con roles
+        //  de Admin o Supervisor
+        if ((Auth::user()->hasRole('Supervisor')) && ($role->name === 'Supervisor' || $role->name ==='Admin')) {
+            $response = [
+                "success"=>false,
+                "message"=>"Errores de Validacion",
+                "data"=>[
+                    "role_id"=>[
+                        "No tiene autorización para asignar este rol a un usuario"
+                    ]
+                ],
+                "status" => 403
+            ];
+            return response()->json($response, 403);
+        }
+
         $user=User::create([
             'name'=>$request->name,
             'email'=>$request->email,

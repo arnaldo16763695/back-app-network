@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
@@ -261,6 +262,36 @@ class UserController extends Controller
                 "status" => 400
             ];
             return response()->json($response, 400);
+        }
+        //  Se verifica que un supervisor no pueda actualizar data de
+        //  algun Supervisor inclusive la propia o la de algún un Admin
+        //  el Supervisor no puede asignar roles de Supervisor o Admin
+        if ((Auth::user()->hasRole('Supervisor')) && ($user->hasRole('Admin') || $user->hasRole('Supervisor'))){
+            $response = [
+                "success"=>false,
+                "message"=>"Errores de Validacion",
+                "data"=>[
+                    "user_id"=>[
+                        "No tiene autorización modificar usuarios con rol: 'Admin' o 'Supervisor'"
+                    ]
+                ],
+                "status" => 403
+            ];
+            return response()->json($response, 403);
+        }
+
+        if ((Auth::user()->hasRole('Supervisor'))&&($role->name === 'Supervisor' || $role->name ==='Admin')){
+            $response = [
+                "success"=>false,
+                "message"=>"Errores de Validacion",
+                "data"=>[
+                    "role_id"=>[
+                        "No tiene autorización para asignar este rol"
+                    ]
+                ],
+                "status" => 403
+            ];
+            return response()->json($response, 403);
         }
         // Se procede a actualizar las propiedades del usuario
         // con los datos recibidos en el request

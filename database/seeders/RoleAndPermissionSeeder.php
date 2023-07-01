@@ -123,6 +123,8 @@ class RoleAndPermissionSeeder extends Seeder
             'auth.changePassword',
             'auth.logout',
 
+            'roles.index',
+
             'devices.index',
             'devices.show',
             'devices.register',

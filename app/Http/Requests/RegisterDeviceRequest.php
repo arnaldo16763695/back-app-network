@@ -38,6 +38,17 @@ class RegisterDeviceRequest extends FormRequest
         ];
     }
 
+    protected function prepareForValidation(): void
+    {
+        $this->merge([
+            'name'=>clean_extra_spaces(trim($this->input('name'))),
+            'manufacturer'=>clean_extra_spaces(trim($this->input('manufacturer'))),
+            'model'=>clean_extra_spaces(trim($this->input('model'))),
+            'serial'=>clean_extra_spaces(trim($this->input('serial'))),
+            'code'=>clean_extra_spaces(trim($this->input('code'))),
+        ]);
+    }
+
     public function failedValidation(Validator $validator){
         throw new HttpResponseException(response()->json([
             'success'=> false,

@@ -30,6 +30,13 @@ class UpdateLocationRequest extends FormRequest
         ];
     }
 
+    protected function prepareForValidation(): void
+    {
+        $this->merge([
+            'name'=>clean_extra_spaces(trim($this->input('name')))
+        ]);
+    }
+
     public function failedValidation(Validator $validator){
        throw new HttpResponseException(response()->json([
         'success'=> false,
