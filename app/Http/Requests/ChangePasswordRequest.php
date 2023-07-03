@@ -34,7 +34,7 @@ class ChangePasswordRequest extends FormRequest
         ];
     }
 
-    public function failedValidations(Validator $validator) {
+    public function failedValidation(Validator $validator) {
         throw new HttpResponseException(response()->json([
             'success'=> false,
             'message'=> 'Errores de Validacion',
